@@ -144,6 +144,49 @@ function showFallback(feed, user) {
 document.addEventListener('DOMContentLoaded', fetchNoteFeed);
 
 /* ===========================
+   Activity report feed
+=========================== */
+async function fetchActivityFeed() {
+  const feed = document.getElementById('reportFeed');
+  if (!feed) return;
+
+  const NOTE_USER = 'yusukesakai_log';
+  const RSS_URL = `https://note.com/${NOTE_USER}/rss`;
+  const PROXY_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`;
+
+  try {
+    const res = await fetch(PROXY_URL);
+    const text = await res.text();
+    const xml = new DOMParser().parseFromString(text, 'text/xml');
+    const items = Array.from(xml.querySelectorAll('item')).slice(0, 6);
+
+    if (items.length === 0) {
+      showFallback(feed, NOTE_USER);
+      return;
+    }
+
+    feed.innerHTML = items.map(item => {
+      const title = item.querySelector('title')?.textContent || '';
+      const link  = item.querySelector('link')?.textContent || '#';
+      const pub   = item.querySelector('pubDate')?.textContent || '';
+      const date  = pub ? new Date(pub).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+      return `
+        <div class="note-card">
+          <div class="note-card-date">${date}</div>
+          <div class="note-card-title">${title}</div>
+          <a href="${link}" target="_blank" class="note-card-link">続きを読む <i class="fas fa-arrow-right"></i></a>
+        </div>`;
+    }).join('');
+
+  } catch (err) {
+    console.error('activity feed fetch error:', err);
+    showFallback(feed, NOTE_USER);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', fetchActivityFeed);
+
+/* ===========================
    Smooth offset for fixed navbar
 =========================== */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
