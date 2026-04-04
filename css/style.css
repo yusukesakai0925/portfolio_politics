@@ -2,17 +2,18 @@
    CSS Variables
 =========================== */
 :root {
-  --primary: #1a5fa0;
-  --primary-light: #2878c0;
-  --accent: #e8a020;
-  --accent-light: #f0bc50;
-  --text: #1a2e42;
-  --text-light: #5a7080;
-  --bg: #f4f8fc;
+  --primary: #2818a0;
+  --primary-light: #3828be;
+  --accent: #a02818;
+  --accent-light: #c03828;
+  --green: #188040;
+  --text: #1a1030;
+  --text-light: #585070;
+  --bg: #f2f2fa;
   --white: #ffffff;
-  --gray: #90aabb;
-  --border: #d0e4f0;
-  --shadow: 0 4px 20px rgba(26, 95, 160, 0.09);
+  --gray: #9090b0;
+  --border: #d4d0f0;
+  --shadow: 0 4px 20px rgba(40, 24, 160, 0.09);
   --radius: 12px;
   --font: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
 }
@@ -42,7 +43,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  background: rgba(18, 52, 90, 0.96);
+  background: rgba(20, 10, 88, 0.96);
   backdrop-filter: blur(8px);
   transition: box-shadow 0.3s;
 }
@@ -61,7 +62,7 @@ img { max-width: 100%; display: block; }
 .nav-logo {
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--white);
   letter-spacing: 0.05em;
 }
 
@@ -110,7 +111,7 @@ img { max-width: 100%; display: block; }
 .hero {
   position: relative;
   min-height: 100vh;
-  background-color: #12344e;
+  background-color: #180c60;
   background-size: cover;
   background-position: center top;
   display: flex;
@@ -128,11 +129,10 @@ img { max-width: 100%; display: block; }
   z-index: 0;
 }
 
-
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 60%, rgba(244,246,251,0.15) 100%);
+  background: linear-gradient(to bottom, transparent 60%, rgba(242,242,250,0.15) 100%);
 }
 
 .hero-content {
@@ -145,7 +145,7 @@ img { max-width: 100%; display: block; }
 
 .hero-badge {
   display: inline-block;
-  background: rgba(201,168,76,0.2);
+  background: rgba(160,40,24,0.2);
   border: 1px solid var(--accent);
   color: var(--accent);
   padding: 6px 18px;
@@ -202,12 +202,12 @@ img { max-width: 100%; display: block; }
 }
 .btn-primary {
   background: var(--accent);
-  color: var(--primary);
+  color: var(--white);
 }
 .btn-primary:hover {
   background: var(--accent-light);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(201,168,76,0.4);
+  box-shadow: 0 8px 24px rgba(160,40,24,0.4);
 }
 .btn-outline {
   background: transparent;
@@ -288,7 +288,7 @@ img { max-width: 100%; display: block; }
 .section-line {
   width: 60px;
   height: 4px;
-  background: linear-gradient(to right, var(--primary-light), var(--accent), var(--accent-light));
+  background: linear-gradient(to right, var(--primary-light), var(--accent), var(--green));
   border-radius: 2px;
   margin: 0 auto 16px;
 }
@@ -316,7 +316,7 @@ img { max-width: 100%; display: block; }
   object-fit: cover;
   object-position: center top;
   border: 4px solid var(--accent);
-  box-shadow: 0 4px 20px rgba(26,39,68,0.2);
+  box-shadow: 0 4px 20px rgba(40,24,160,0.15);
 }
 
 .about-name {
@@ -367,8 +367,8 @@ img { max-width: 100%; display: block; }
 }
 .sns-x { background: var(--primary); color: var(--white); }
 .sns-x:hover { background: var(--primary-light); transform: translateY(-2px); }
-.sns-email { background: #e8ecf5; color: var(--primary); }
-.sns-email:hover { background: #d8def0; transform: translateY(-2px); }
+.sns-email { background: #e8e8f8; color: var(--primary); }
+.sns-email:hover { background: #d4d0f4; transform: translateY(-2px); }
 
 /* ===========================
    Policy Cards
@@ -389,13 +389,13 @@ img { max-width: 100%; display: block; }
 .policy-card:hover {
   border-color: var(--accent);
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(201,168,76,0.15);
+  box-shadow: 0 8px 24px rgba(160,40,24,0.15);
 }
 
 .policy-icon {
   width: 64px;
   height: 64px;
-  background: linear-gradient(135deg, var(--primary), #2878c0);
+  background: linear-gradient(135deg, var(--primary), #3828be);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -422,7 +422,7 @@ img { max-width: 100%; display: block; }
   content: '▸';
   position: absolute;
   left: 0;
-  color: var(--accent);
+  color: var(--green);
   font-size: 0.75rem;
 }
 
@@ -456,7 +456,7 @@ img { max-width: 100%; display: block; }
   position: absolute;
   left: 6px; top: 0; bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom, var(--accent), #2878c0);
+  background: linear-gradient(to bottom, var(--accent), var(--primary));
 }
 
 .timeline-item {
@@ -475,7 +475,7 @@ img { max-width: 100%; display: block; }
 }
 .timeline-dot--current {
   background: var(--accent);
-  box-shadow: 0 0 0 4px rgba(201,168,76,0.2);
+  box-shadow: 0 0 0 4px rgba(160,40,24,0.2);
 }
 
 .timeline-year {
@@ -509,7 +509,7 @@ img { max-width: 100%; display: block; }
   font-size: 0.9rem;
   color: var(--text);
 }
-.cert-item i { color: var(--accent); font-size: 0.85rem; }
+.cert-item i { color: var(--green); font-size: 0.85rem; }
 
 /* Business cards */
 .business-card {
@@ -526,7 +526,7 @@ img { max-width: 100%; display: block; }
   background: var(--primary);
   border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  color: var(--accent);
+  color: var(--white);
   font-size: 1.1rem;
   flex-shrink: 0;
 }
@@ -563,7 +563,7 @@ img { max-width: 100%; display: block; }
   position: absolute;
   top: 0; left: 0;
   width: 4px; height: 100%;
-  background: linear-gradient(to bottom, var(--accent), #2878c0);
+  background: linear-gradient(to bottom, var(--accent), var(--green));
 }
 .activity-card:hover {
   box-shadow: var(--shadow);
@@ -577,8 +577,8 @@ img { max-width: 100%; display: block; }
 }
 .activity-tag {
   display: inline-block;
-  background: var(--primary);
-  color: var(--accent);
+  background: var(--green);
+  color: var(--white);
   font-size: 0.75rem;
   font-weight: 700;
   padding: 2px 10px;
@@ -633,7 +633,7 @@ img { max-width: 100%; display: block; }
 .contact-email:hover {
   background: var(--primary-light);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(26,39,68,0.25);
+  box-shadow: 0 8px 24px rgba(40,24,160,0.25);
 }
 
 .contact-twitter {
@@ -667,7 +667,7 @@ img { max-width: 100%; display: block; }
 }
 
 .contact-support.contact-disabled {
-  background: #e8ecf5;
+  background: #e8e8f8;
   color: #aab;
   cursor: not-allowed;
   position: relative;
@@ -702,7 +702,7 @@ img { max-width: 100%; display: block; }
 .footer-name {
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--white);
   margin-bottom: 8px;
 }
 .footer-copy {
@@ -804,7 +804,7 @@ img { max-width: 100%; display: block; }
 .btn-note:hover {
   background: var(--primary-light);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(26,39,68,0.2);
+  box-shadow: 0 6px 20px rgba(40,24,160,0.2);
 }
 
 /* ===========================
