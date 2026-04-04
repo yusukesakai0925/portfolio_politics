@@ -105,7 +105,7 @@ async function fetchNoteFeed() {
     const res = await fetch(PROXY_URL);
     const text = await res.text();
     const xml = new DOMParser().parseFromString(text, 'text/xml');
-    const items = Array.from(xml.querySelectorAll('item')).slice(0, 5);
+    const items = Array.from(xml.querySelectorAll('item')).slice(0, 6);
 
     if (items.length === 0) {
       showFallback(feed, NOTE_USER);
@@ -135,9 +135,6 @@ function showFallback(feed, user) {
   feed.innerHTML = `
     <div class="note-fallback">
       <p>記事の自動取得ができませんでした。</p>
-      <a href="https://note.com/${user}" target="_blank" class="btn btn-note">
-        <i class="fas fa-book-open"></i> noteで記事を読む
-      </a>
     </div>`;
 }
 

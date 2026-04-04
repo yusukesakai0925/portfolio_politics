@@ -656,6 +656,16 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 8px 24px rgba(26,107,58,0.3);
 }
 
+.contact-openchat {
+  background: #06C755;
+  color: var(--white);
+}
+.contact-openchat:hover {
+  background: #05a847;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(6,199,85,0.35);
+}
+
 .contact-support.contact-disabled {
   background: #e8ecf5;
   color: #aab;
