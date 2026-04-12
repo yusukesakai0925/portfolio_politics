@@ -91,56 +91,6 @@ const sectionObserver = new IntersectionObserver((entries) => {
 sections.forEach(s => sectionObserver.observe(s));
 
 /* ===========================
-   Note feed
-=========================== */
-async function fetchNoteFeed() {
-  const feed = document.getElementById('noteFeed');
-  if (!feed) return;
-
-  const NOTE_USER = 'yusukesakai_tech';
-  const RSS_URL = `https://note.com/${NOTE_USER}/rss`;
-  const PROXY_URL = `https://api.allorigins.win/raw?url=${encodeURIComponent(RSS_URL)}`;
-
-  try {
-    const res = await fetch(PROXY_URL);
-    const text = await res.text();
-    const xml = new DOMParser().parseFromString(text, 'text/xml');
-    const items = Array.from(xml.querySelectorAll('item')).slice(0, 6);
-
-    if (items.length === 0) {
-      showFallback(feed, NOTE_USER);
-      return;
-    }
-
-    feed.innerHTML = items.map(item => {
-      const title = item.querySelector('title')?.textContent || '';
-      const link  = item.querySelector('link')?.textContent || '#';
-      const pub   = item.querySelector('pubDate')?.textContent || '';
-      const date  = pub ? new Date(pub).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
-      return `
-        <div class="note-card">
-          <div class="note-card-date">${date}</div>
-          <div class="note-card-title">${title}</div>
-          <a href="${link}" target="_blank" class="note-card-link">続きを読む <i class="fas fa-arrow-right"></i></a>
-        </div>`;
-    }).join('');
-
-  } catch (err) {
-    console.error('note fetch error:', err);
-    showFallback(feed, NOTE_USER);
-  }
-}
-
-function showFallback(feed, user) {
-  feed.innerHTML = `
-    <div class="note-fallback">
-      <p>記事の自動取得ができませんでした。</p>
-    </div>`;
-}
-
-document.addEventListener('DOMContentLoaded', fetchNoteFeed);
-
-/* ===========================
    Activity report feed
 =========================== */
 async function fetchActivityFeed() {
