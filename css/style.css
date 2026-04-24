@@ -371,6 +371,54 @@ img { max-width: 100%; display: block; }
 .sns-email:hover { background: #d4d0f4; transform: translateY(-2px); }
 
 /* ===========================
+   Beliefs
+=========================== */
+.beliefs-list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.belief-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(212,188,144,0.2);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  transition: border-color 0.2s;
+}
+.belief-item:hover { border-color: rgba(212,188,144,0.5); }
+.belief-number {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #1a1a2e;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.belief-content h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-light);
+  margin-bottom: 0.3rem;
+}
+.belief-content p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ===========================
    Policy Cards
 =========================== */
 .policy-grid {
