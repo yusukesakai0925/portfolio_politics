@@ -374,47 +374,57 @@ img { max-width: 100%; display: block; }
    Beliefs
 =========================== */
 .beliefs-list {
-  max-width: 800px;
+  max-width: 760px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 0;
+  counter-reset: belief;
 }
 .belief-item {
   display: flex;
   align-items: flex-start;
-  gap: 1.2rem;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(212,188,144,0.2);
-  border-radius: 12px;
-  padding: 1.2rem 1.5rem;
-  transition: border-color 0.2s;
+  gap: 1.4rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 0;
+  padding: 1.4rem 1.6rem;
+  transition: background 0.2s, box-shadow 0.2s;
 }
-.belief-item:hover { border-color: rgba(212,188,144,0.5); }
+.belief-item:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+.belief-item:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
+.belief-item + .belief-item { border-top: none; }
+.belief-item:hover {
+  background: #faf9ff;
+  box-shadow: var(--shadow);
+  z-index: 1;
+  position: relative;
+}
 .belief-number {
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--accent);
-  color: #1a1a2e;
+  color: var(--white);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 2px;
 }
 .belief-content h3 {
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--text-light);
+  color: var(--text);
   margin-bottom: 0.3rem;
 }
 .belief-content p {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  line-height: 1.6;
+  font-size: 0.88rem;
+  color: var(--text-light);
+  line-height: 1.65;
   margin: 0;
 }
 
