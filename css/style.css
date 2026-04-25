@@ -377,19 +377,16 @@ img { max-width: 100%; display: block; }
   max-width: 860px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1.2rem;
-}
-.belief-item:last-child {
-  grid-column: 1 / -1;
 }
 .belief-item {
   display: flex;
-  align-items: flex-start;
-  gap: 1.2rem;
+  flex-direction: column;
+  gap: 0.8rem;
   background: var(--white);
   border: 1px solid var(--border);
-  border-top: 3px solid var(--accent);
+  border-top: 3px solid var(--primary);
   border-radius: var(--radius);
   padding: 1.4rem 1.6rem;
   transition: box-shadow 0.2s, transform 0.2s;
@@ -399,38 +396,35 @@ img { max-width: 100%; display: block; }
   transform: translateY(-2px);
 }
 .belief-number {
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--primary);
   color: var(--white);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2px;
+  flex-shrink: 0;
 }
 .belief-content h3 {
-  font-size: 1rem;
+  font-size: 0.97rem;
   font-weight: 700;
   color: var(--text);
   margin-bottom: 0.3rem;
 }
 .belief-content p {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: var(--text-light);
   line-height: 1.65;
   margin: 0;
 }
-@media (max-width: 640px) {
-  .beliefs-list {
-    grid-template-columns: 1fr;
-  }
-  .belief-item:last-child {
-    grid-column: auto;
-  }
+@media (max-width: 768px) {
+  .beliefs-list { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .beliefs-list { grid-template-columns: 1fr; }
 }
 
 /* ===========================
