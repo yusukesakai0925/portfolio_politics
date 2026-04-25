@@ -381,9 +381,6 @@ img { max-width: 100%; display: block; }
   gap: 1.2rem;
 }
 .belief-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
   background: var(--white);
   border: 1px solid var(--border);
   border-top: 3px solid var(--primary);
@@ -395,19 +392,7 @@ img { max-width: 100%; display: block; }
   box-shadow: var(--shadow);
   transform: translateY(-2px);
 }
-.belief-number {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: var(--white);
-  font-weight: 700;
-  font-size: 0.85rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
+.belief-number { display: none; }
 .belief-content h3 {
   font-size: 0.97rem;
   font-weight: 700;
