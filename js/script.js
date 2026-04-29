@@ -147,3 +147,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+/* ===========================
+   Equalize belief-item heights
+=========================== */
+function equalizeBeliefHeights() {
+  const items = document.querySelectorAll('.belief-item');
+  items.forEach(el => el.style.height = '');
+  let maxH = 0;
+  items.forEach(el => maxH = Math.max(maxH, el.offsetHeight));
+  items.forEach(el => el.style.height = maxH + 'px');
+}
+window.addEventListener('load', equalizeBeliefHeights);
+window.addEventListener('resize', equalizeBeliefHeights);
