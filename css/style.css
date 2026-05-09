@@ -553,36 +553,6 @@ img { max-width: 100%; display: block; }
 }
 .cert-item i { color: var(--green); font-size: 0.85rem; }
 
-/* Business cards */
-.business-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 14px 16px;
-  background: var(--bg);
-  border-radius: 10px;
-  margin-bottom: 12px;
-}
-.biz-icon {
-  width: 44px; height: 44px;
-  background: var(--primary);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--white);
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-.business-card h4 {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 2px;
-}
-.business-card p {
-  font-size: 0.8rem;
-  color: var(--text-light);
-}
-
 /* ===========================
    Activities
 =========================== */
