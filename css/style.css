@@ -689,6 +689,17 @@ img { max-width: 100%; display: block; }
   content: ' 🔒';
 }
 
+.contact-youtube.contact-disabled {
+  background: #e8e8f8;
+  color: #aab;
+  cursor: not-allowed;
+  position: relative;
+  opacity: 0.75;
+}
+.contact-youtube.contact-disabled small::after {
+  content: ' 🔒';
+}
+
 .contact-note {
   font-size: 0.85rem;
   color: var(--gray);
