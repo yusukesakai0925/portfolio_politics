@@ -762,6 +762,13 @@ img { max-width: 100%; display: block; }
   color: rgba(255,255,255,0.5);
   margin-bottom: 1rem;
 }
+.footer-privacy {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.38);
+  max-width: 640px;
+  margin: 1.2rem auto 0;
+}
 .footer-sns { display: flex; gap: 1rem; justify-content: center; }
 .footer-sns a {
   color: rgba(255,255,255,0.5);
