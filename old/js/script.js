@@ -1,6 +1,5 @@
 /* ===========================
-   Header scroll effect
-   （ヒーロー上では透明、スクロールでインク面＋細線）
+   Navbar scroll effect
 =========================== */
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
@@ -18,10 +17,9 @@ const hamburger = document.getElementById('hamburger');
 const navMenu = document.getElementById('navMenu');
 
 hamburger.addEventListener('click', () => {
-  const opened = navMenu.classList.toggle('open');
-  hamburger.setAttribute('aria-expanded', String(opened));
+  navMenu.classList.toggle('open');
   const spans = hamburger.querySelectorAll('span');
-  if (opened) {
+  if (navMenu.classList.contains('open')) {
     spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
     spans[1].style.opacity = '0';
     spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
@@ -36,7 +34,6 @@ hamburger.addEventListener('click', () => {
 navMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     navMenu.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', 'false');
     hamburger.querySelectorAll('span').forEach(s => {
       s.style.transform = '';
       s.style.opacity = '';
@@ -46,19 +43,16 @@ navMenu.querySelectorAll('a').forEach(link => {
 
 /* ===========================
    Scroll reveal animation
-   （控えめなフェード＋上昇。グリッド内は80ms刻みのスタッガー）
 =========================== */
-const revealElements = document.querySelectorAll(
-  '.section, .belief-item, .timeline-item, .cert-list li, .contact-grid li, .about-photo-wrap, .hero-photo'
-);
+const revealElements = document.querySelectorAll('.section, .policy-card, .activity-card, .timeline-item, .cert-item, .business-card');
 
 revealElements.forEach(el => el.classList.add('reveal'));
 
 const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
+  entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
-      // Stagger effect for list/grid items
-      const delay = entry.target.closest('.beliefs-list, .timeline, .cert-list, .contact-grid')
+      // Stagger effect for grid items
+      const delay = entry.target.closest('.policy-grid, .activity-grid, .timeline, .cert-list')
         ? Array.from(entry.target.parentElement.children).indexOf(entry.target) * 80
         : 0;
       setTimeout(() => {
@@ -78,14 +72,17 @@ revealElements.forEach(el => revealObserver.observe(el));
    Active nav highlight on scroll
 =========================== */
 const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.site-nav a[href^="#"]');
+const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
 
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       const id = entry.target.getAttribute('id');
       navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        link.style.color = '';
+        if (link.getAttribute('href') === `#${id}`) {
+          link.style.color = 'var(--accent)';
+        }
       });
     }
   });
@@ -95,20 +92,7 @@ sections.forEach(s => sectionObserver.observe(s));
 
 /* ===========================
    Activity report feed
-   （note RSS → alloriginsプロキシ経由。取得失敗・0件時は必ずfallbackを表示し、
-     「読み込み中...」が永久表示にならないようにする）
 =========================== */
-// RSS取得失敗・0件時のフォールバック表示（.note-fallback は css/style.css に定義済み）
-function showFallback(feed, user) {
-  feed.innerHTML = `
-    <div class="note-fallback">
-      <p>記事を読み込めませんでした。noteで最新の活動報告をご覧ください。</p>
-      <a href="https://note.com/${user}" target="_blank" rel="noopener" class="btn btn-line">
-        <i class="fas fa-book-open"></i> noteで活動報告を読む
-      </a>
-    </div>`;
-}
-
 async function fetchActivityFeed() {
   const feed = document.getElementById('reportFeed');
   if (!feed) return;
@@ -133,16 +117,11 @@ async function fetchActivityFeed() {
       const link  = item.querySelector('link')?.textContent || '#';
       const pub   = item.querySelector('pubDate')?.textContent || '';
       const date  = pub ? new Date(pub).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
-      // 記事本文の抜粋（HTMLタグを除去し先頭80字）。タイトルだけより記事の中身が伝わる
-      const descRaw = item.querySelector('description')?.textContent || '';
-      const descText = descRaw.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
-      const excerpt = descText.length > 80 ? descText.slice(0, 80) + '…' : descText;
       return `
         <div class="note-card">
           <div class="note-card-date">${date}</div>
           <div class="note-card-title">${title}</div>
-          ${excerpt ? `<div class="note-card-excerpt">${excerpt}</div>` : ''}
-          <a href="${link}" target="_blank" rel="noopener" class="note-card-link">続きを読む <i class="fas fa-arrow-right"></i></a>
+          <a href="${link}" target="_blank" class="note-card-link">続きを読む <i class="fas fa-arrow-right"></i></a>
         </div>`;
     }).join('');
 
@@ -155,16 +134,29 @@ async function fetchActivityFeed() {
 document.addEventListener('DOMContentLoaded', fetchActivityFeed);
 
 /* ===========================
-   Smooth offset for fixed header
+   Smooth offset for fixed navbar
 =========================== */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     const target = document.querySelector(this.getAttribute('href'));
     if (target) {
       e.preventDefault();
-      const offset = 64; // header height（css --head-h と揃える）
+      const offset = 72; // navbar height
       const top = target.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   });
 });
+
+/* ===========================
+   Equalize belief-item heights
+=========================== */
+function equalizeBeliefHeights() {
+  const items = document.querySelectorAll('.belief-item');
+  items.forEach(el => el.style.height = '');
+  let maxH = 0;
+  items.forEach(el => maxH = Math.max(maxH, el.offsetHeight));
+  items.forEach(el => el.style.height = maxH + 'px');
+}
+window.addEventListener('load', equalizeBeliefHeights);
+window.addEventListener('resize', equalizeBeliefHeights);
