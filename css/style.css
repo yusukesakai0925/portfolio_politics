@@ -19,6 +19,7 @@
   --paper-tint: #FFFFFF; /* AsIs light --bg-sub */
   /* アクセント: 青(主体) / ゴールド(装飾) */
   --brass: #C9A24B;         /* 紙面上の索引番号・装飾線 → AsIs --gold */
+  --brass-text: #896C29;    /* 本文・アイコン用の金色（白背景で4.95:1 / 紙色で4.59:1）。装飾線は --brass のまま */
   --brass-bright: #5B8DEF;  /* インク面のアクセント → AsIs --accent 青 */
   --text: #1A2030;      /* AsIs light --text */
   --text-dim: #55607A;  /* AsIs light --text-sub */
@@ -292,7 +293,7 @@ ul, ol { list-style: none; }
   font-family: var(--font-mono);
   font-size: 0.66rem;
   letter-spacing: 0.35em;
-  color: var(--brass);
+  color: var(--brass-text);
   flex-shrink: 0;
 }
 .fields-list {
@@ -303,7 +304,7 @@ ul, ol { list-style: none; }
   font-weight: 500;
   color: var(--text);
 }
-.fields-list i { color: var(--brass); margin-right: 0.45em; font-size: 0.85em; }
+.fields-list i { color: var(--brass-text); margin-right: 0.45em; font-size: 0.85em; }
 
 /* ---------------------------------------------------------------------
    セクション共通
@@ -338,7 +339,7 @@ ul, ol { list-style: none; }
 .sec-index {
   font-family: var(--font-mono);
   font-size: 0.95rem;
-  color: var(--brass);
+  color: var(--brass-text);
 }
 .sec-title {
   font-family: var(--font-serif);
@@ -409,7 +410,7 @@ ul, ol { list-style: none; }
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.15em;
-  color: var(--brass);
+  color: var(--brass-text);
   padding-top: 0.2em;
 }
 
@@ -441,7 +442,7 @@ ul, ol { list-style: none; }
   font-weight: 500;
   font-size: 3rem;
   line-height: 1;
-  color: var(--brass);
+  color: var(--brass-text);
   text-align: right;
   padding-right: 4px;
 }
@@ -473,7 +474,7 @@ ul, ol { list-style: none; }
   font-weight: 500;
   font-size: 0.78rem;
   letter-spacing: 0.3em;
-  color: var(--brass);
+  color: var(--brass-text);
   margin-bottom: 28px;
 }
 
@@ -544,7 +545,7 @@ ul, ol { list-style: none; }
 .cert-list li::before {
   content: '—';
   font-family: var(--font-mono);
-  color: var(--brass);
+  color: var(--brass-text);
   margin-right: 0.9em;
   font-size: 0.8em;
 }
@@ -580,7 +581,7 @@ ul, ol { list-style: none; }
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.1em;
-  color: var(--brass);
+  color: var(--brass-text);
   margin-bottom: 10px;
 }
 .note-card-title {
@@ -601,7 +602,7 @@ ul, ol { list-style: none; }
   margin-top: auto;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--brass);
+  color: var(--brass-text);
   letter-spacing: 0.05em;
 }
 .note-card-link:hover { text-decoration: underline; }
@@ -637,7 +638,7 @@ ul, ol { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--brass);
+  color: var(--brass-text);
   font-size: 1.05rem;
 }
 .contact-card-title { font-weight: 700; font-size: 0.92rem; color: var(--ink); line-height: 1.5; }
@@ -655,7 +656,7 @@ ul, ol { list-style: none; }
   color: var(--text-dim);
   margin-bottom: 56px;
 }
-.contact-note i { color: var(--brass); margin-right: 0.4em; }
+.contact-note i { color: var(--brass-text); margin-right: 0.4em; }
 
 /* AI秘書チーム: 細線枠の囲み記事風 */
 .ai-team {
@@ -672,7 +673,7 @@ ul, ol { list-style: none; }
   color: var(--ink);
   margin-bottom: 14px;
 }
-.ai-team-title i { color: var(--brass); margin-right: 0.4em; }
+.ai-team-title i { color: var(--brass-text); margin-right: 0.4em; }
 .ai-team-desc { font-size: 0.88rem; color: var(--text-dim); margin-bottom: 22px; }
 .ai-team-links { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 
@@ -730,7 +731,7 @@ ul, ol { list-style: none; }
 .footer-ai {
   font-size: 0.68rem;
   line-height: 1.9;
-  color: rgba(245,246,250,0.4);
+  color: rgba(245,246,250,0.55);
   margin-bottom: 14px;
   word-break: break-all;
 }
@@ -754,7 +755,7 @@ ul, ol { list-style: none; }
 .footer-privacy {
   font-size: 0.7rem;
   line-height: 1.9;
-  color: rgba(245,246,250,0.4);
+  color: rgba(245,246,250,0.55);
   max-width: 620px;
   margin: 0 auto;
 }
