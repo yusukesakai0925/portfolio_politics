@@ -726,6 +726,24 @@ ul, ol { list-style: none; }
   transition: color 0.25s;
 }
 .footer-sns a:hover { color: var(--brass-bright); }
+/* AI向け案内（MCPエンドポイント / llms.txt）。長いURLが折り返せるよう break-all */
+.footer-ai {
+  font-size: 0.68rem;
+  line-height: 1.9;
+  color: rgba(245,246,250,0.4);
+  margin-bottom: 14px;
+  word-break: break-all;
+}
+.footer-ai code {
+  font-family: var(--font-mono);
+  color: rgba(245,246,250,0.55);
+}
+.footer-ai a {
+  color: rgba(245,246,250,0.55);
+  text-decoration: underline;
+  transition: color 0.25s;
+}
+.footer-ai a:hover { color: var(--brass-bright); }
 .footer-copy {
   font-family: var(--font-mono);
   font-size: 0.68rem;
