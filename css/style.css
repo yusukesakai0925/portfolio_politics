@@ -225,35 +225,31 @@ ul, ol { list-style: none; }
   display: flex;
   align-items: flex-end;
 }
-.hero-text { max-width: 720px; position: relative; }
-/* 文字が写真の明るい部分に重なるとコントラストが 2.07:1 まで落ちるため（監査#119 F-02）、
-   テキストの背後だけに紺のスクリムを敷く。右端で完全に透明になるので、
-   写真右側の被写体の明るさは変えない（7/2 の「写真は明るく」の指示を維持）。
-   合成後は写真が真っ白の最悪ケースでも #F5F6FA の文字で 4.9:1（要求 4.5:1）。 */
-.hero-text::before {
-  content: "";
-  position: absolute;
-  top: -24px;
-  bottom: -24px;
-  left: -32px;
-  right: -180px;
-  background: linear-gradient(to right,
-    rgba(11, 16, 32, 0.62) 0%,
-    rgba(11, 16, 32, 0.62) 80%,
-    rgba(11, 16, 32, 0.0) 100%);
-  z-index: -1;
-  pointer-events: none;
-}
+.hero-text { max-width: 720px; }
 
+/* 小さい文字が写真の明るい部分に重なると 2.07:1 まで落ちるため（監査#119 F-02）、
+   この1行の「文字の幅ぶんだけ」紺の下地を敷く。
+   - width:fit-content なので下地は文字幅（実測 約403px）＋左右16pxまでしか広がらない
+   - max-width で右端を viewport の 50% 未満に抑える。被写体（写真の人物）は
+     どの画面幅でも横 53.5% より右にいるので、下地が人物に届くことはない
+   - 濃さ 0.62 は、下に来る写真が真っ白でも #F5F6FA の文字で 4.94:1（要求 4.5:1）
+   ※ ここを面（テキストブロック全体）で暗くすると顔にかぶる（2026-08-09 酒井さん指摘）。
+      暗くしていいのは文字の下だけ。 */
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 10px 0;
+  width: fit-content;
+  max-width: min(100%, calc(50vw - 40px));
   font-family: var(--font-mono);
   font-size: 0.74rem;
   letter-spacing: 0.12em;
   color: var(--paper);
+  margin-left: -16px;
   margin-bottom: 30px;
+  padding: 8px 16px;
+  background: rgba(11, 16, 32, 0.62);
+  border-radius: 2px;
   text-shadow: 0 1px 2px rgba(11,16,32,0.9), 0 2px 10px rgba(11,16,32,0.7);
 }
 .hero-meta-item { padding: 0 14px; border-left: 1px solid var(--line-ink); }
@@ -848,16 +844,15 @@ ul, ol { list-style: none; }
   .sec-sub { margin: -24px 0 32px; }
 
   .hero-inner { padding: calc(var(--head-h) + 36px) 20px 96px; }
-  /* モバイルは文字が画面幅いっぱいに広がるので、テキスト背後だけを暗くする手が使えない。
-     スクリムを1枚重ねる方式に戻し、濃さを一律 0.62 にする（写真が真っ白でも白文字で4.9:1）。
-     二重に暗くならないよう .hero-text::before は無効化する。 */
-  .hero-text::before { display: none; }
+  /* モバイル: 写真全面を暗くすると人物まで沈むので、元どおり左側だけ薄める
+     （文字の可読性は .hero-meta の下地と text-shadow で担保する）。 */
   .hero-scrim {
     background:
-      linear-gradient(to right, rgba(11, 16, 32, 0.62) 0%, rgba(11, 16, 32, 0.62) 100%),
-      linear-gradient(to bottom, rgba(11, 16, 32, 0.06), rgba(11, 16, 32, 0.24));
+      linear-gradient(to right, rgba(11, 16, 32, 0.55) 0%, rgba(11, 16, 32, 0.30) 45%, rgba(11, 16, 32, 0.08) 100%),
+      linear-gradient(to bottom, rgba(11, 16, 32, 0.10), rgba(11, 16, 32, 0.40));
   }
-  .hero-meta { flex-direction: column; gap: 6px; }
+  /* 縦積みになるので下地は最長行ぶんの幅で足りる。50vw の上限は残すと余計に折り返すので外す */
+  .hero-meta { flex-direction: column; gap: 6px; max-width: 100%; }
   .hero-meta-item { padding: 0; border-left: none; }
   .hero-scrollcue { left: 20px; }
 
