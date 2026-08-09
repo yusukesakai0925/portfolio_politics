@@ -98,8 +98,20 @@ sections.forEach(s => sectionObserver.observe(s));
    （note RSS → alloriginsプロキシ経由。取得失敗・0件時は必ずfallbackを表示し、
      「読み込み中...」が永久表示にならないようにする）
 =========================== */
+// 記事タイトルを属性値に入れるための実体参照化（タイトルに " や & が入っても壊れないように）
+function escAttr(s) {
+  return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+}
+
+// 読み込みの成否をスクリーンリーダーに通知する（#reportFeedStatus は画面に出ない）
+function setFeedStatus(msg) {
+  const el = document.getElementById('reportFeedStatus');
+  if (el) el.textContent = msg;
+}
+
 // RSS取得失敗・0件時のフォールバック表示（.note-fallback は css/style.css に定義済み）
 function showFallback(feed, user) {
+  setFeedStatus('活動報告の記事を読み込めませんでした。noteへのリンクを表示しています。');
   feed.innerHTML = `
     <div class="note-fallback">
       <p>記事を読み込めませんでした。noteで最新の活動報告をご覧ください。</p>
@@ -142,13 +154,18 @@ async function fetchActivityFeed() {
           <div class="note-card-date">${date}</div>
           <div class="note-card-title">${title}</div>
           ${excerpt ? `<div class="note-card-excerpt">${excerpt}</div>` : ''}
-          <a href="${link}" target="_blank" rel="noopener" class="note-card-link">続きを読む <i class="fas fa-arrow-right"></i></a>
+          <a href="${link}" target="_blank" rel="noopener" class="note-card-link" aria-label="${escAttr(title)} を読む">続きを読む <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
         </div>`;
     }).join('');
+    setFeedStatus(`活動報告の記事を${items.length}件読み込みました。`);
 
   } catch (err) {
     console.error('activity feed fetch error:', err);
     showFallback(feed, NOTE_USER);
+  } finally {
+    // 記事一覧・フォールバックのどちらに差し替わっても「読み込み中」を解除する。
+    // 解除しないとスクリーンリーダーは読み込み中のまま次へ進んでしまう。
+    feed.setAttribute('aria-busy', 'false');
   }
 }
 

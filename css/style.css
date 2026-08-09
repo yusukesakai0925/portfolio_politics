@@ -48,6 +48,18 @@ img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
 
+/* 画面には出さず、スクリーンリーダーにだけ読ませる要素（display:none だと読まれないため
+   1px に潰して隠す）。活動報告の読み込み結果の通知に使用。 */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* ---------------------------------------------------------------------
    共通部品
 --------------------------------------------------------------------- */
@@ -815,9 +827,18 @@ ul, ol { list-style: none; }
     border-bottom: 1px solid var(--line-ink);
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.35s ease;
+    /* 閉じているときは visibility:hidden にして、Tabキーの移動先・読み上げから外す。
+       max-height:0 と overflow:hidden だけだとリンクはページ上に残り、
+       キーボード利用者は画面に何も見えないまま5回Tabを押すことになる。
+       畳むアニメーションが終わってから隠すため visibility の変化は 0.35s 遅らせる。 */
+    visibility: hidden;
+    transition: max-height 0.35s ease, visibility 0s linear 0.35s;
   }
-  .site-nav.open { max-height: 360px; }
+  .site-nav.open {
+    max-height: 360px;
+    visibility: visible;
+    transition: max-height 0.35s ease, visibility 0s;
+  }
   .site-nav li { border-top: 1px solid var(--line-ink); }
   .site-nav a { display: block; padding: 15px 24px; border-bottom: none; }
 
