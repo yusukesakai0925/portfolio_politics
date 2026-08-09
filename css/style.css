@@ -213,7 +213,25 @@ ul, ol { list-style: none; }
   display: flex;
   align-items: flex-end;
 }
-.hero-text { max-width: 720px; }
+.hero-text { max-width: 720px; position: relative; }
+/* 文字が写真の明るい部分に重なるとコントラストが 2.07:1 まで落ちるため（監査#119 F-02）、
+   テキストの背後だけに紺のスクリムを敷く。右端で完全に透明になるので、
+   写真右側の被写体の明るさは変えない（7/2 の「写真は明るく」の指示を維持）。
+   合成後は写真が真っ白の最悪ケースでも #F5F6FA の文字で 4.9:1（要求 4.5:1）。 */
+.hero-text::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  bottom: -24px;
+  left: -32px;
+  right: -180px;
+  background: linear-gradient(to right,
+    rgba(11, 16, 32, 0.62) 0%,
+    rgba(11, 16, 32, 0.62) 80%,
+    rgba(11, 16, 32, 0.0) 100%);
+  z-index: -1;
+  pointer-events: none;
+}
 
 .hero-meta {
   display: flex;
@@ -222,7 +240,7 @@ ul, ol { list-style: none; }
   font-family: var(--font-mono);
   font-size: 0.74rem;
   letter-spacing: 0.12em;
-  color: var(--brass-bright);
+  color: var(--paper);
   margin-bottom: 30px;
   text-shadow: 0 1px 2px rgba(11,16,32,0.9), 0 2px 10px rgba(11,16,32,0.7);
 }
@@ -809,11 +827,14 @@ ul, ol { list-style: none; }
   .sec-sub { margin: -24px 0 32px; }
 
   .hero-inner { padding: calc(var(--head-h) + 36px) 20px 96px; }
-  /* モバイル: 文字が写真全面に重なるため完全透明にはせず控えめに薄める（text-shadow併用前提） */
+  /* モバイルは文字が画面幅いっぱいに広がるので、テキスト背後だけを暗くする手が使えない。
+     スクリムを1枚重ねる方式に戻し、濃さを一律 0.62 にする（写真が真っ白でも白文字で4.9:1）。
+     二重に暗くならないよう .hero-text::before は無効化する。 */
+  .hero-text::before { display: none; }
   .hero-scrim {
     background:
-      linear-gradient(to right, rgba(11, 16, 32, 0.55) 0%, rgba(11, 16, 32, 0.30) 45%, rgba(11, 16, 32, 0.08) 100%),
-      linear-gradient(to bottom, rgba(11, 16, 32, 0.10), rgba(11, 16, 32, 0.40));
+      linear-gradient(to right, rgba(11, 16, 32, 0.62) 0%, rgba(11, 16, 32, 0.62) 100%),
+      linear-gradient(to bottom, rgba(11, 16, 32, 0.06), rgba(11, 16, 32, 0.24));
   }
   .hero-meta { flex-direction: column; gap: 6px; }
   .hero-meta-item { padding: 0; border-left: none; }
