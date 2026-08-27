@@ -40,13 +40,39 @@ body {
   background: var(--paper);
   color: var(--text);
   line-height: 1.9;
-  font-size: 15.5px;
+  font-size: 0.97rem; /* rem化: ブラウザの文字サイズ設定が有効になる。既定16px環境で15.52px≒現状同じ（F-12対応）*/
   -webkit-font-smoothing: antialiased;
 }
 
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
+
+/* スキップリンク: 通常は画面外に隠し、フォーカス時に左上に出す（F-08対応）。
+   display:none だとフォーカス自体が当たらないため position:absolute で隠す方式を採用 */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  padding: 0.55em 1.2em;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: 2px;
+  z-index: 9999;
+}
+.skip-link:focus {
+  left: 8px;
+}
+
+/* フォーカスリング: ブラウザ既定枠は紺地で見えにくいため上書き（F-08対応）。
+   :focus-visible を使うのでプログラム的フォーカス（F-07のtarget.focus()）では枠が出ない */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--brass-bright);
+  outline-offset: 2px;
+}
 
 /* 画面には出さず、スクリーンリーダーにだけ読ませる要素（display:none だと読まれないため
    1px に潰して隠す）。活動報告の読み込み結果の通知に使用。 */
@@ -291,7 +317,7 @@ ul, ol { list-style: none; }
   display: block;
   width: 56px; height: 1px;
   background: var(--brass-bright);
-  animation: cue 2.2s ease-in-out infinite;
+  animation: cue 2.2s ease-in-out 3; /* 3回で止まる: infinite だと WCAG 2.2.2 違反（F-10対応）*/
   transform-origin: left;
 }
 @keyframes cue {
@@ -340,6 +366,9 @@ ul, ol { list-style: none; }
   margin: 0 auto;
   padding: 104px 24px;
 }
+/* ページ内リンクで固定ヘッダーに隠れないよう余白を確保（F-07対応）*/
+section[id] { scroll-margin-top: var(--head-h); }
+
 /* 淡色帯セクション: 全幅の紙色差でリズムを作る */
 .section-tinted {
   max-width: none;

@@ -47,6 +47,10 @@
 </head>
 <body id="top">
 
+  <!-- スキップリンク: キーボード利用者がナビを飛ばして本文へ直接移動できる。
+       通常は画面外に隠し、フォーカス時だけ左上に出す（F-08対応） -->
+  <a href="#main-content" class="skip-link">本文へスキップ</a>
+
   <!-- ヘッダー: 細線1本で仕切るミニマルなエディトリアルヘッダー。項目にはモノスペースの索引番号 -->
   <header class="site-head" id="navbar">
     <div class="site-head-inner">
@@ -104,7 +108,7 @@
   <!-- 注力分野: 現行「キャッチコピーバー」の4項目をデータ・インデックス風の細線ストリップで -->
   <div class="fields-strip" id="fields" aria-label="注力分野">
     <div class="fields-inner">
-      <span class="fields-label">FIELDS</span>
+      <span class="fields-label" aria-hidden="true">FIELDS</span>
       <ul class="fields-list">
         <li><i class="fas fa-robot" aria-hidden="true"></i> AI・テクノロジー政策</li>
         <li><i class="fas fa-yen-sign" aria-hidden="true"></i> 経済・金融政策</li>
@@ -114,14 +118,14 @@
     </div>
   </div>
 
-  <main>
+  <main id="main-content">
 
     <!-- 01 プロフィール -->
     <section id="about" class="section">
       <header class="sec-head">
         <span class="sec-index">01</span>
         <h2 class="sec-title">プロフィール</h2>
-        <span class="sec-en">PROFILE</span>
+        <span class="sec-en" aria-hidden="true">PROFILE</span>
       </header>
 
       <div class="about-grid">
@@ -153,7 +157,7 @@
       <header class="sec-head">
         <span class="sec-index">02</span>
         <h2 class="sec-title">ポリシー</h2>
-        <span class="sec-en">POLICY</span>
+        <span class="sec-en" aria-hidden="true">POLICY</span>
       </header>
 
       <ol class="beliefs-list">
@@ -212,7 +216,7 @@
       <header class="sec-head">
         <span class="sec-index">03</span>
         <h2 class="sec-title">経歴</h2>
-        <span class="sec-en">CAREER</span>
+        <span class="sec-en" aria-hidden="true">CAREER</span>
       </header>
 
       <div class="career-columns">
@@ -271,7 +275,7 @@
       <header class="sec-head">
         <span class="sec-index">04</span>
         <h2 class="sec-title">活動報告</h2>
-        <span class="sec-en">REPORT</span>
+        <span class="sec-en" aria-hidden="true">REPORT</span>
       </header>
 
       <div id="reportFeed" class="note-feed" aria-busy="true">
@@ -294,7 +298,7 @@
       <header class="sec-head">
         <span class="sec-index">05</span>
         <h2 class="sec-title">お問い合わせ</h2>
-        <span class="sec-en">CONTACT</span>
+        <span class="sec-en" aria-hidden="true">CONTACT</span>
       </header>
       <p class="sec-sub">政策へのご意見・取材などはお気軽にどうぞ</p>
 
@@ -328,7 +332,7 @@
           </a>
         </li>
         <li>
-          <div class="contact-card contact-card--disabled" aria-disabled="true">
+          <div class="contact-card contact-card--disabled">
             <span class="contact-card-icon"><i class="fas fa-hands-helping" aria-hidden="true"></i></span>
             <span class="contact-card-title">後援会のご案内</span>
             <span class="contact-card-sub">準備中</span>
