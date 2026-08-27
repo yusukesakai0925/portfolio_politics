@@ -182,6 +182,12 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const offset = 64; // header height（css --head-h と揃える）
       const top = target.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: 'smooth' });
+      // キーボード利用者のフォーカスを移動先へ送る（F-07）
+      // 元々 tabindex を持つ要素は上書きしない
+      if (!target.hasAttribute('tabindex')) {
+        target.setAttribute('tabindex', '-1');
+      }
+      target.focus({ preventScroll: true });
     }
   });
 });
