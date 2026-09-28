@@ -661,10 +661,15 @@ section[id] { scroll-margin-top: var(--head-h); }
   letter-spacing: 0.05em;
 }
 .note-card-link:hover { text-decoration: underline; }
-.note-link-wrap { text-align: center; }
+.note-link-wrap {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
 /* ---------------------------------------------------------------------
-   05 お問い合わせ
+   06 お問い合わせ
 --------------------------------------------------------------------- */
 .contact-grid {
   display: grid;
