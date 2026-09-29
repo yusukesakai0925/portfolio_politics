@@ -671,17 +671,6 @@ section[id] { scroll-margin-top: var(--head-h); }
 /* ---------------------------------------------------------------------
    05 目安箱
 --------------------------------------------------------------------- */
-.meyasu-lead {
-  margin: 0 0 28px;
-  text-align: center;
-  font-size: 1.16rem;
-  font-weight: 700;
-  line-height: 1.7;
-  color: var(--ink);
-}
-.meyasu-lead strong {
-  color: var(--brass-text);
-}
 .meyasu-steps {
   list-style: none;
   padding: 0;
@@ -974,7 +963,6 @@ section[id] { scroll-margin-top: var(--head-h); }
   .fields-inner { padding: 16px 20px; gap: 14px; }
   .fields-list { gap: 6px 22px; font-size: 0.82rem; }
 
-  .meyasu-lead { font-size: 1.02rem; margin-bottom: 22px; }
   .meyasu-steps { flex-direction: column; gap: 12px; }
   .meyasu-step:not(:last-child)::after { display: none; }
   .meyasu-step { padding: 20px 16px; }
