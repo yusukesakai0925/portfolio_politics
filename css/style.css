@@ -950,6 +950,10 @@ section[id] { scroll-margin-top: var(--head-h); }
   /* 縦積みになるので下地は最長行ぶんの幅で足りる。50vw の上限は残すと余計に折り返すので外す */
   .hero-meta { flex-direction: column; gap: 6px; max-width: 100%; }
   .hero-meta-item { padding: 0; border-left: none; }
+  /* スマホでは最長行「1996年生まれ・◯歳 ／ ITコンサルタント」の下地が顔に掛かる（2026-10-13 酒井さん指摘）。
+     肩書きを次の行に送り、下地の右端を画面の半分より左で止める（人物は横 53.5% より右）。 */
+  .hero-meta-sep { display: none; }
+  .hero-meta-job { display: block; margin-top: 6px; }
   .hero-scrollcue { left: 20px; }
 
   .belief-item { grid-template-columns: 56px minmax(0, 1fr); gap: 18px; padding: 28px 0; }
