@@ -330,16 +330,17 @@ ul, ol { list-style: none; }
   font-size: 0.86rem;
 }
 
-/* スマホ: テーブル非表示 → カード表示 */
-@media (max-width: 600px) {
-  .txn-table { display: none; }
-  .txn-cards { display: block; }
-}
 
 /* ==========================================================
    取引カード（スマホ専用・600px 以下で表示）
 ========================================================== */
 .txn-cards { display: none; }
+
+/* スマホ（基本の display:none より後に置く）: テーブル非表示 → カード表示 */
+@media (max-width: 600px) {
+  .txn-table { display: none; }
+  .txn-cards { display: block; }
+}
 .txn-card {
   border: 1px solid var(--line);
   border-radius: 3px;
