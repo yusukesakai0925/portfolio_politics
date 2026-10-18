@@ -381,6 +381,11 @@ section[id] { scroll-margin-top: var(--head-h); }
   margin-left: auto;
   margin-right: auto;
 }
+/* .sec-sub・.meyasu-steps などが margin の一括指定で左右の auto を消して左に寄るのを防ぐ */
+.section.section-tinted > * {
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* 見出し: 索引番号(mono) ＋ 明朝タイトル ＋ 欧文ラベル を1本の罫で束ねる */
 .sec-head {

@@ -399,90 +399,72 @@ ul, ol { list-style: none; }
 }
 
 /* ==========================================================
-   05 このページの作り方
+   05 このページの作り方（図）
 ========================================================== */
 .howto-flow {
   display: flex;
   align-items: flex-start;
-  gap: 0;
-  margin-bottom: 16px;
+  justify-content: center;
+  margin: 8px 0 0;
 }
-.howto-arrow {
-  font-size: 1.4rem;
-  color: var(--brass-text);
-  padding: 0 10px;
-  align-self: center;
-  flex-shrink: 0;
-}
-.howto-box {
+.howto-step {
   flex: 1;
+  max-width: 220px;
+  margin: 0;
   background: var(--paper-tint);
   border: 1px solid var(--line);
-  border-radius: 4px;
-  padding: 16px 14px 12px;
+  border-radius: 6px;
+  padding: 18px 10px 14px;
+  text-align: center;
 }
-.howto-box-num {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  letter-spacing: 0.12em;
-  margin-bottom: 4px;
-}
-.howto-box-title {
+.howto-step svg { width: 64px; height: 64px; display: block; margin: 0 auto 10px; }
+.howto-step b {
+  display: block;
   font-family: var(--font-serif);
-  font-size: 0.9rem;
-  font-weight: 700;
+  font-size: 0.95rem;
   color: var(--ink);
-  margin-bottom: 8px;
-  line-height: 1.4;
 }
-.howto-box-body {
-  font-size: 0.82rem;
-  color: var(--text-dim);
-  line-height: 1.65;
-}
-.howto-badge {
-  display: inline-block;
-  background: rgba(91,141,239,0.15);
-  color: #2d5db0;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  padding: 2px 7px;
-  border-radius: 2px;
-  margin-bottom: 6px;
-}
-.howto-roles {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px 24px;
-  font-size: 0.8rem;
-  color: var(--text-dim);
-  padding-top: 10px;
-  border-top: 1px solid var(--line);
-}
-.howto-roles-label {
-  font-weight: 600;
+.howto-step small { display: block; font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
+.howto-step-app { border: 2px solid var(--brass-bright); }
+.howto-arrow {
+  flex-shrink: 0;
+  width: 36px;
+  margin-top: 64px;
+  text-align: center;
+  font-size: 1.5rem;
   color: var(--brass-text);
 }
+.howto-arrow::before { content: '→'; }
+/* アプリの下に「AI ⇄ 酒井」の相談 */
+.howto-talk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto;
+  width: max-content;
+  max-width: 100%;
+}
+.howto-talk-line {
+  width: 2px; height: 22px; margin: 0 auto;
+  background: var(--brass-bright);
+}
+.howto-who {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(91,141,239,0.12);
+  border-radius: 999px;
+  padding: 6px 14px 6px 8px;
+  font-size: 0.82rem; font-weight: 700; color: #2d5db0;
+}
+.howto-who svg { width: 26px; height: 26px; }
+.howto-swap { font-size: 1.2rem; color: var(--brass-bright); line-height: 1; text-align: center; }
+.howto-swap small { display: block; font-size: 0.68rem; color: var(--text-dim); }
 
 @media (max-width: 699px) {
-  .howto-flow {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-  .howto-arrow {
-    text-align: center;
-    padding: 4px 0;
-    align-self: center;
-    font-size: 0;          /* → を非表示 */
-  }
-  .howto-arrow::before {
-    content: '↓';
-    font-size: 1.2rem;
-    color: var(--brass-text);
-  }
+  .howto-flow { flex-direction: column; align-items: center; }
+  .howto-step { width: 100%; max-width: 280px; }
+  .howto-arrow { width: auto; padding: 2px 0; margin-top: 0; }
+  .howto-arrow::before { content: '↓'; }
 }
 
 /* ==========================================================
@@ -917,29 +899,29 @@ async function render() {
     <!-- 5. このページの作り方 -->
     <section class="section" id="howto">
       <h2 class="section-title"><span class="section-idx">05</span>このページの作り方</h2>
-      <div class="howto-flow">
-        <div class="howto-box">
-          <div class="howto-box-num">① 原資料</div>
-          <div class="howto-box-title">提出した収支報告書</div>
-          <div class="howto-box-body">選挙管理委員会の受付印・訂正印が入った控えをスキャン（34ページ）。元のExcelもあわせて使用。</div>
+      <div class="howto-flow" role="img" aria-label="提出した収支報告書のスキャン、自作の政治資金管理アプリ、このページ、の順に作っています。アプリはAIと酒井が相談しながら作りました。">
+        <figure class="howto-step">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="14" y="6" width="36" height="48" rx="3" fill="#fff" stroke="#0B1020" stroke-width="2.5"/><path d="M21 17h22M21 24h22M21 31h14" stroke="#0B1020" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="42" r="7" fill="none" stroke="#C0392B" stroke-width="2.5"/><path d="M6 46h52" stroke="#5B8DEF" stroke-width="3" stroke-linecap="round"/></svg>
+          <b>収支報告書</b><small>提出した控えをスキャン</small>
+        </figure>
+        <div class="howto-arrow" aria-hidden="true"></div>
+        <div>
+          <figure class="howto-step howto-step-app">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="12" width="48" height="32" rx="3" fill="#fff" stroke="#0B1020" stroke-width="2.5"/><path d="M4 50h56" stroke="#0B1020" stroke-width="2.5" stroke-linecap="round"/><path d="M16 22h14M16 28h20M16 34h10" stroke="#5B8DEF" stroke-width="2.5" stroke-linecap="round"/><path d="M40 33l4 4 7-9" fill="none" stroke="#2E8B57" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <b>自作アプリ</b><small>帳簿と領収書を照合</small>
+          </figure>
+          <div class="howto-talk-line" aria-hidden="true"></div>
+          <div class="howto-talk" aria-hidden="true">
+            <span class="howto-who"><svg viewBox="0 0 32 32"><rect x="6" y="9" width="20" height="16" rx="5" fill="#5B8DEF"/><circle cx="12.5" cy="17" r="2.2" fill="#fff"/><circle cx="19.5" cy="17" r="2.2" fill="#fff"/><path d="M16 4v5" stroke="#5B8DEF" stroke-width="2.5"/><circle cx="16" cy="4" r="2" fill="#5B8DEF"/></svg>AI</span>
+            <span class="howto-swap">⇄<small>相談</small></span>
+            <span class="howto-who"><svg viewBox="0 0 32 32"><circle cx="16" cy="11" r="6" fill="#0B1020"/><path d="M5 29c1-7 5-10 11-10s10 3 11 10z" fill="#0B1020"/></svg>酒井</span>
+          </div>
         </div>
-        <div class="howto-arrow">→</div>
-        <div class="howto-box">
-          <div class="howto-badge">AI と相談</div>
-          <div class="howto-box-num">② アプリ</div>
-          <div class="howto-box-title">自作の政治資金管理アプリ</div>
-          <div class="howto-box-body">AIと相談しながら開発。報告書の取引を1件ずつ帳簿に取り込み、領収書をひも付けて照合。訂正印の読み取りなど迷う所は酒井が確認。</div>
-        </div>
-        <div class="howto-arrow">→</div>
-        <div class="howto-box">
-          <div class="howto-box-num">③ 公開</div>
-          <div class="howto-box-title">このページ</div>
-          <div class="howto-box-body">アプリの帳簿から自動で書き出し。個人の寄附者名・住所は自動で伏せています。</div>
-        </div>
-      </div>
-      <div class="howto-roles">
-        <div><span class="howto-roles-label">AIの担当：</span>読み取り・照合・プログラム作成</div>
-        <div><span class="howto-roles-label">酒井の担当：</span>方針の決定・最終確認</div>
+        <div class="howto-arrow" aria-hidden="true"></div>
+        <figure class="howto-step">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="10" width="52" height="44" rx="3" fill="#fff" stroke="#0B1020" stroke-width="2.5"/><path d="M6 20h52" stroke="#0B1020" stroke-width="2.5"/><circle cx="12" cy="15" r="1.6" fill="#0B1020"/><circle cx="17" cy="15" r="1.6" fill="#0B1020"/><rect x="14" y="36" width="8" height="12" fill="#5B8DEF"/><rect x="28" y="28" width="8" height="20" fill="#C9A24B"/><rect x="42" y="32" width="8" height="16" fill="#5B8DEF"/></svg>
+          <b>このページ</b><small>帳簿から自動で公開</small>
+        </figure>
       </div>
     </section>
   `;
