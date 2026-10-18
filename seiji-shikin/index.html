@@ -399,6 +399,93 @@ ul, ol { list-style: none; }
 }
 
 /* ==========================================================
+   05 このページの作り方
+========================================================== */
+.howto-flow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 16px;
+}
+.howto-arrow {
+  font-size: 1.4rem;
+  color: var(--brass-text);
+  padding: 0 10px;
+  align-self: center;
+  flex-shrink: 0;
+}
+.howto-box {
+  flex: 1;
+  background: var(--paper-tint);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 16px 14px 12px;
+}
+.howto-box-num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+.howto-box-title {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.howto-box-body {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.65;
+}
+.howto-badge {
+  display: inline-block;
+  background: rgba(91,141,239,0.15);
+  color: #2d5db0;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  margin-bottom: 6px;
+}
+.howto-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.howto-roles-label {
+  font-weight: 600;
+  color: var(--brass-text);
+}
+
+@media (max-width: 699px) {
+  .howto-flow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+  .howto-arrow {
+    text-align: center;
+    padding: 4px 0;
+    align-self: center;
+    font-size: 0;          /* → を非表示 */
+  }
+  .howto-arrow::before {
+    content: '↓';
+    font-size: 1.2rem;
+    color: var(--brass-text);
+  }
+}
+
+/* ==========================================================
    フッター
 ========================================================== */
 .site-foot {
@@ -772,6 +859,7 @@ async function render() {
     <div class="notice">
       選挙管理委員会に提出した選挙運動費用収支報告書の記載をもとに表示しています。正式な内容は提出した報告書をご確認ください。
     </div>
+    <p style="margin-top:8px;font-size:0.84rem;"><a href="#howto">このページの作り方（AIと一緒に作っています）↓</a></p>
 
     <!-- 1. 合計 -->
     <section class="section" id="summary">
@@ -824,6 +912,35 @@ async function render() {
         <select class="filter-select" id="cat-filter">${catOptions}</select>
       </div>
       <div id="txn-table-wrap"></div>
+    </section>
+
+    <!-- 5. このページの作り方 -->
+    <section class="section" id="howto">
+      <h2 class="section-title"><span class="section-idx">05</span>このページの作り方</h2>
+      <div class="howto-flow">
+        <div class="howto-box">
+          <div class="howto-box-num">① 原資料</div>
+          <div class="howto-box-title">提出した収支報告書</div>
+          <div class="howto-box-body">選挙管理委員会の受付印・訂正印が入った控えをスキャン（34ページ）。元のExcelもあわせて使用。</div>
+        </div>
+        <div class="howto-arrow">→</div>
+        <div class="howto-box">
+          <div class="howto-badge">AI と相談</div>
+          <div class="howto-box-num">② アプリ</div>
+          <div class="howto-box-title">自作の政治資金管理アプリ</div>
+          <div class="howto-box-body">AIと相談しながら開発。報告書の取引を1件ずつ帳簿に取り込み、領収書をひも付けて照合。訂正印の読み取りなど迷う所は酒井が確認。</div>
+        </div>
+        <div class="howto-arrow">→</div>
+        <div class="howto-box">
+          <div class="howto-box-num">③ 公開</div>
+          <div class="howto-box-title">このページ</div>
+          <div class="howto-box-body">アプリの帳簿から自動で書き出し。個人の寄附者名・住所は自動で伏せています。</div>
+        </div>
+      </div>
+      <div class="howto-roles">
+        <div><span class="howto-roles-label">AIの担当：</span>読み取り・照合・プログラム作成</div>
+        <div><span class="howto-roles-label">酒井の担当：</span>方針の決定・最終確認</div>
+      </div>
     </section>
   `;
 
