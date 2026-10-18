@@ -426,6 +426,18 @@ ul, ol { list-style: none; }
 }
 .howto-step small { display: block; font-size: 0.75rem; color: var(--text-dim); margin-top: 2px; }
 .howto-step-app { border: 2px solid var(--brass-bright); }
+.howto-step-ai { border: 2px solid #5B8DEF; }
+.howto-auto {
+  margin: 18px auto 0;
+  max-width: 560px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #2d5db0;
+  background: rgba(91,141,239,0.10);
+  border-radius: 6px;
+  padding: 10px 14px;
+}
 .howto-arrow {
   flex-shrink: 0;
   width: 36px;
@@ -463,6 +475,8 @@ ul, ol { list-style: none; }
 @media (max-width: 699px) {
   .howto-flow { flex-direction: column; align-items: center; }
   .howto-step { width: 100%; max-width: 280px; }
+  .howto-flow > div { width: 100%; max-width: 280px; }
+  .howto-step-app { max-width: none; }
   .howto-arrow { width: auto; padding: 2px 0; margin-top: 0; }
   .howto-arrow::before { content: '↓'; }
 }
@@ -899,16 +913,21 @@ async function render() {
     <!-- 5. このページの作り方 -->
     <section class="section" id="howto">
       <h2 class="section-title"><span class="section-idx">05</span>このページの作り方</h2>
-      <div class="howto-flow" role="img" aria-label="提出した収支報告書のスキャン、自作の政治資金管理アプリ、このページ、の順に作っています。アプリはAIと酒井が相談しながら作りました。">
+      <div class="howto-flow" role="img" aria-label="提出した収支報告書をスキャンし、AI-OCRで読み取り、AIが自作の政治資金管理アプリに登録し、帳簿からこのページを自動で公開しています。人が数字を打ち込む工程はありません。アプリはAIと酒井が相談しながら作りました。">
         <figure class="howto-step">
           <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="14" y="6" width="36" height="48" rx="3" fill="#fff" stroke="#0B1020" stroke-width="2.5"/><path d="M21 17h22M21 24h22M21 31h14" stroke="#0B1020" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="42" r="7" fill="none" stroke="#C0392B" stroke-width="2.5"/><path d="M6 46h52" stroke="#5B8DEF" stroke-width="3" stroke-linecap="round"/></svg>
           <b>収支報告書</b><small>提出した控えをスキャン</small>
         </figure>
         <div class="howto-arrow" aria-hidden="true"></div>
+        <figure class="howto-step howto-step-ai">
+          <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="12" y="8" width="28" height="38" rx="3" fill="#fff" stroke="#0B1020" stroke-width="2.5"/><path d="M18 16h16M18 22h10" stroke="#0B1020" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="40" r="11" fill="rgba(91,141,239,0.15)" stroke="#5B8DEF" stroke-width="3"/><path d="M48 48l9 9" stroke="#5B8DEF" stroke-width="4" stroke-linecap="round"/><text x="40" y="44" text-anchor="middle" font-size="10" font-weight="700" fill="#2d5db0" font-family="sans-serif">AI</text></svg>
+          <b>AI-OCR</b><small>AIが文字と数字を読み取り</small>
+        </figure>
+        <div class="howto-arrow" aria-hidden="true"></div>
         <div>
           <figure class="howto-step howto-step-app">
             <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="12" width="48" height="32" rx="3" fill="#fff" stroke="#0B1020" stroke-width="2.5"/><path d="M4 50h56" stroke="#0B1020" stroke-width="2.5" stroke-linecap="round"/><path d="M16 22h14M16 28h20M16 34h10" stroke="#5B8DEF" stroke-width="2.5" stroke-linecap="round"/><path d="M40 33l4 4 7-9" fill="none" stroke="#2E8B57" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <b>自作アプリ</b><small>帳簿と領収書を照合</small>
+            <b>自作アプリ</b><small>AIが帳簿に登録・領収書と照合</small>
           </figure>
           <div class="howto-talk-line" aria-hidden="true"></div>
           <div class="howto-talk" aria-hidden="true">
@@ -923,6 +942,7 @@ async function render() {
           <b>このページ</b><small>帳簿から自動で公開</small>
         </figure>
       </div>
+      <p class="howto-auto">スキャンから公開まで、すべてAIが自動で処理しています。<br>人が数字を打ち込む工程はありません。</p>
     </section>
   `;
 
