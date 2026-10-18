@@ -438,11 +438,12 @@ function esc(s) {
 }
 
 // ================================================================
-// Sankey 図を SVG で描く（3列構造）
-//   左列 : 収入カテゴリ（income sources）
-//   中列 : 収入合計ノード（pool）
-//   右列 : 支出カテゴリ
-//   帯   : 収入ソース→合計・合計→支出費目 の2段ベジェ
+// Sankey 図を SVG で描く（4列構造）
+//   1列目 : 収入カテゴリ（income sources）
+//   2列目 : 収入合計ノード
+//   3列目 : 支出合計ノード
+//   4列目 : 支出カテゴリ
+//   帯    : 収入ソース→収入合計・収入合計→支出合計・支出合計→支出費目 の3段ベジェ
 //
 // availW: コンテナ実幅（px）を渡すことでスマホでも正寸で描画し、
 //         viewBox 縮小によるラベル縮小を回避する。
@@ -453,14 +454,17 @@ function buildSankey(incomeByCategory, expenseByCategory, availW) {
   const W   = Math.max(availW || 520, 260);
   const PAD = 10;
 
-  // ノード幅: W に比例しつつ上限 130 / 下限 64
-  const N_W       = Math.min(Math.max(Math.floor(W * 0.23), 64), 130);
-  const gapSpace  = W - 2 * PAD - 3 * N_W;
+  // ノード幅: 外側（費目）は W に比例しつつ上限 130 / 下限 64、中央の合計2つは少し細く
+  const N_W       = Math.min(Math.max(Math.floor(W * 0.21), 64), 130);
+  const M_W       = Math.min(Math.max(Math.floor(W * 0.17), 56), 110);
+  const GAP_M     = Math.min(Math.max(Math.floor(W * 0.04), 8), 40);
+  const gapSpace  = W - 2 * PAD - 2 * N_W - 2 * M_W - GAP_M;
   const GAP       = Math.max(10, Math.floor(gapSpace / 2));
 
-  const X_L = PAD;
-  const X_M = X_L + N_W + GAP;
-  const X_R = X_M + N_W + GAP;
+  const X_L  = PAD;
+  const X_MI = X_L + N_W + GAP;      // 収入合計
+  const X_MO = X_MI + M_W + GAP_M;   // 支出合計
+  const X_R  = X_MO + M_W + GAP;
 
   const totalInc = incomeByCategory.reduce((s, c) => s + c.amount, 0);
   const totalExp = expenseByCategory.reduce((s, c) => s + c.amount, 0);
@@ -493,11 +497,21 @@ function buildSankey(incomeByCategory, expenseByCategory, availW) {
   const incNodes = layoutNodes(incomeByCategory, X_L);
   const expNodes = layoutNodes(expenseByCategory, X_R);
 
-  // 収入合計（中央）ノードの高さ = 収入ノード群の上端〜下端
-  const poolTop = incNodes.length ? incNodes[0].y : PAD;
-  const poolBot = incNodes.length ? incNodes[incNodes.length - 1].y + incNodes[incNodes.length - 1].h
-                                  : PAD + usable;
-  const poolH   = Math.max(poolBot - poolTop, 1);
+  // 収入合計ノードの高さ = 収入ノード群の上端〜下端、支出合計も同様に支出ノード群に合わせる
+  function span(nodes) {
+    const top = nodes.length ? nodes[0].y : PAD;
+    const bot = nodes.length ? nodes[nodes.length - 1].y + nodes[nodes.length - 1].h : PAD + usable;
+    return { top, bot, h: Math.max(bot - top, 1) };
+  }
+  // 合計2つは同じ縮尺で描く（同額なら同じ高さ）。費目側は最小高さで膨らむので、広い方の幅に合わせる
+  const spIn  = span(incNodes), spOut = span(expNodes);
+  const poolTop = Math.min(spIn.top, spOut.top);
+  const unit    = (Math.max(spIn.bot, spOut.bot) - poolTop) / total;
+  const inPool  = { top: poolTop, h: Math.max(Math.round(totalInc * unit), 1) };
+  const outPool = { top: poolTop, h: Math.max(Math.round(totalExp * unit), 1) };
+  inPool.bot  = inPool.top + inPool.h;
+  outPool.bot = outPool.top + outPool.h;
+  const poolBot = Math.max(inPool.bot, outPool.bot);
 
   // SVG 高さ: 実際のノード下端から計算（費目が多いと usable を超えるため事前推算は使わない）
   const bottomInc = incNodes.length ? incNodes[incNodes.length - 1].y + incNodes[incNodes.length - 1].h : PAD;
@@ -512,23 +526,34 @@ function buildSankey(incomeByCategory, expenseByCategory, availW) {
           + `xmlns="http://www.w3.org/2000/svg" aria-label="収支フロー図">`;
 
   // --- 帯: 収入ソース → 収入合計 ---
-  let cL = poolTop;
+  let cL = inPool.top;
   incNodes.forEach((n, i) => {
-    const bh  = Math.max(2, Math.round((n.amount / total) * poolH));
+    const bh  = Math.max(2, Math.round((n.amount / Math.max(totalInc, 1)) * inPool.h));
     const mx  = X_L + N_W + GAP * 0.45;
-    const p   = `M${X_L+N_W},${n.y} C${mx},${n.y} ${mx},${cL} ${X_M},${cL} `
-              + `L${X_M},${cL+bh} C${mx},${cL+bh} ${mx},${n.y+n.h} ${X_L+N_W},${n.y+n.h}Z`;
+    const p   = `M${X_L+N_W},${n.y} C${mx},${n.y} ${mx},${cL} ${X_MI},${cL} `
+              + `L${X_MI},${cL+bh} C${mx},${cL+bh} ${mx},${n.y+n.h} ${X_L+N_W},${n.y+n.h}Z`;
     svg += `<path d="${p}" fill="${INC_COLORS[i % INC_COLORS.length]}" opacity="${BAND_OP}"/>`;
     cL += bh;
   });
 
-  // --- 帯: 収入合計 → 支出費目 ---
-  let cR = poolTop;
+  // --- 帯: 収入合計 → 支出合計（支出に回った額の分だけ） ---
+  if (totalInc > 0 && totalExp > 0) {
+    const used = Math.min(totalInc, totalExp);
+    const ih   = Math.max(2, Math.round((used / totalInc) * inPool.h));
+    const oh   = Math.max(2, Math.round((used / totalExp) * outPool.h));
+    const x1   = X_MI + M_W, x2 = X_MO, mx = (x1 + x2) / 2;
+    const p    = `M${x1},${inPool.top} C${mx},${inPool.top} ${mx},${outPool.top} ${x2},${outPool.top} `
+               + `L${x2},${outPool.top+oh} C${mx},${outPool.top+oh} ${mx},${inPool.top+ih} ${x1},${inPool.top+ih}Z`;
+    svg += `<path d="${p}" fill="#4a6fa5" opacity="${BAND_OP}"/>`;
+  }
+
+  // --- 帯: 支出合計 → 支出費目 ---
+  let cR = outPool.top;
   expNodes.forEach((n, i) => {
-    const bh  = Math.max(2, Math.round((n.amount / total) * poolH));
-    const mx  = X_M + N_W + GAP * 0.45;
-    const p   = `M${X_M+N_W},${cR} C${mx},${cR} ${mx},${n.y} ${X_R},${n.y} `
-              + `L${X_R},${n.y+n.h} C${mx},${n.y+n.h} ${mx},${cR+bh} ${X_M+N_W},${cR+bh}Z`;
+    const bh  = Math.max(2, Math.round((n.amount / Math.max(totalExp, 1)) * outPool.h));
+    const mx  = X_MO + M_W + GAP * 0.45;
+    const p   = `M${X_MO+M_W},${cR} C${mx},${cR} ${mx},${n.y} ${X_R},${n.y} `
+              + `L${X_R},${n.y+n.h} C${mx},${n.y+n.h} ${mx},${cR+bh} ${X_MO+M_W},${cR+bh}Z`;
     svg += `<path d="${p}" fill="${EXP_COLORS[i % EXP_COLORS.length]}" opacity="${BAND_OP}"/>`;
     cR += bh;
   });
@@ -562,8 +587,9 @@ function buildSankey(incomeByCategory, expenseByCategory, availW) {
   incNodes.forEach((n, i) => {
     svg += nodeEl(X_L, n.y, N_W, n.h, INC_COLORS[i % INC_COLORS.length], n.label, n.amount);
   });
-  // 収入合計ノード（中列）
-  svg += nodeEl(X_M, poolTop, N_W, poolH, '#4a6fa5', '収入合計', totalInc);
+  // 収入合計・支出合計ノード（中央の2列）
+  svg += nodeEl(X_MI, inPool.top, M_W, inPool.h, '#4a6fa5', '収入合計', totalInc);
+  svg += nodeEl(X_MO, outPool.top, M_W, outPool.h, '#3d5a85', '支出合計', totalExp);
   // 支出費目ノード（右列）
   expNodes.forEach((n, i) => {
     svg += nodeEl(X_R, n.y, N_W, n.h, EXP_COLORS[i % EXP_COLORS.length], n.label, n.amount);
