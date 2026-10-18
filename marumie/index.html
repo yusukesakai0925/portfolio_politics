@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>選挙運動費用収支 — 酒井勇輔 2026年衆院選</title>
+<style>
+/* ==========================================================
+   色・書体: homepage_sakai の style.css に準じる
+   (外部フォントなし: Google Fonts 相当をシステムフォントで代替)
+========================================================== */
+:root {
+  --ink:        #0B1020;
+  --ink-soft:   #141B30;
+  --paper:      #F5F6FA;
+  --paper-tint: #FFFFFF;
+  --brass:      #C9A24B;
+  --brass-text: #896C29;
+  --brass-bright: #5B8DEF;
+  --text:       #1A2030;
+  --text-dim:   #55607A;
+  --line:       rgba(85,96,122,0.18);
+  --line-ink:   rgba(139,149,173,0.18);
+  /* フォント: 外部CDN不可のためシステムフォント代替 */
+  --font-serif: 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', Georgia, serif;
+  --font-sans:  'Hiragino Kaku Gothic ProN', 'Meiryo', 'Yu Gothic', sans-serif;
+  --font-mono:  'Menlo', 'Consolas', 'Courier New', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--text);
+  line-height: 1.9;
+  font-size: 0.97rem;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--brass-bright); text-decoration: none; }
+ul, ol { list-style: none; }
+
+/* ==========================================================
+   ヘッダー
+========================================================== */
+.site-head {
+  background: var(--ink);
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--line-ink);
+}
+.brand-ja {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--paper);
+}
+.brand-sep { color: var(--line-ink); margin: 0 12px; }
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--brass-bright);
+}
+
+/* ==========================================================
+   メインレイアウト
+========================================================== */
+.main-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+/* ==========================================================
+   ページタイトル
+========================================================== */
+.page-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.page-meta {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  margin-bottom: 28px;
+}
+
+/* ==========================================================
+   注意書き
+========================================================== */
+.notice {
+  border-left: 3px solid var(--brass);
+  padding: 10px 16px;
+  background: rgba(201,162,75,0.07);
+  font-size: 0.84rem;
+  color: var(--text-dim);
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+
+/* ==========================================================
+   セクション共通
+========================================================== */
+.section { margin-bottom: 52px; }
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--brass);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.section-idx {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--brass-text);
+  letter-spacing: 0.15em;
+}
+
+/* ==========================================================
+   合計カード
+========================================================== */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 0;
+}
+.summary-card {
+  background: var(--paper-tint);
+  border: 1px solid var(--line);
+  padding: 16px 18px;
+  border-radius: 2px;
+}
+.summary-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.summary-amount {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.summary-amount.positive { color: #2a7a3b; }
+.summary-amount.negative { color: #b02020; }
+.summary-amount.neutral  { color: var(--brass-text); }
+.summary-unit {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-left: 3px;
+}
+
+@media (max-width: 520px) {
+  .summary-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================
+   サンキー図（SVG）
+   ※ JS が .getBoundingClientRect() でコンテナ幅を取得して描画する。
+     overflow-x は念のため auto のまま残すが通常はスクロール不要。
+========================================================== */
+.sankey-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--paper-tint);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 8px 0 4px;
+}
+.sankey-svg {
+  display: block;
+  margin: 0 auto;
+}
+
+/* サンキー凡例（SVG 外・ノードと重ならない） */
+.sankey-legend {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 10px 6px;
+  font-size: 11px;
+  color: #8898aa;
+  font-family: sans-serif;
+  user-select: none;
+}
+
+/* 0円で図から省いた区分の注記 */
+.flow-note {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+/* ==========================================================
+   内訳表
+========================================================== */
+.breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.breakdown-table th,
+.breakdown-table td {
+  text-align: left;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.breakdown-table th {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  background: var(--paper);
+  font-weight: 500;
+}
+.breakdown-table td.amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.bar-cell { width: 140px; }
+.bar-bg {
+  background: var(--line);
+  border-radius: 2px;
+  height: 8px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--brass-bright);
+  min-width: 2px;
+}
+.bar-fill.income { background: #2a7a3b; }
+.bar-fill.expense { background: var(--brass-bright); }
+
+@media (max-width: 520px) {
+  .bar-cell { display: none; }
+}
+
+/* ==========================================================
+   取引一覧
+========================================================== */
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.filter-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+.filter-select {
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--paper-tint);
+  color: var(--text);
+  cursor: pointer;
+}
+.txn-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.87rem;
+}
+.txn-table th,
+.txn-table td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.txn-table th {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  background: var(--paper);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.txn-table td.amount-col {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.txn-table td.date-col {
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.tag-income  { background: rgba(42,122,59,0.12);  color: #2a7a3b; }
+.tag-expense { background: rgba(91,141,239,0.12); color: #2d5db0; }
+.tag-noncash { background: rgba(201,162,75,0.15); color: var(--brass-text); }
+.no-rows {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-dim);
+  font-size: 0.86rem;
+}
+
+/* スマホ: テーブル非表示 → カード表示 */
+@media (max-width: 600px) {
+  .txn-table { display: none; }
+  .txn-cards { display: block; }
+}
+
+/* ==========================================================
+   取引カード（スマホ専用・600px 以下で表示）
+========================================================== */
+.txn-cards { display: none; }
+.txn-card {
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: var(--paper-tint);
+}
+.txn-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.txn-card-date {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.txn-card-amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: right;
+  white-space: nowrap;
+}
+.txn-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+  font-size: 0.82rem;
+}
+.txn-card-purpose {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  width: 100%;
+  margin-top: 2px;
+  line-height: 1.5;
+}
+
+/* ==========================================================
+   フッター
+========================================================== */
+.site-foot {
+  background: var(--ink-soft);
+  color: rgba(245,246,250,0.5);
+  font-size: 0.76rem;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <a href="/" class="brand-ja" style="color:inherit;text-decoration:none;">酒井勇輔</a>
+  <span class="brand-sep">|</span>
+  <span class="brand-sub">POLITICAL FINANCE · PUBLIC RECORD</span>
+</header>
+
+<main>
+<div class="main-inner" id="app">
+  <div style="color:var(--text-dim);padding:40px 0;text-align:center;font-size:0.9rem;">
+    読み込み中…
+  </div>
+</div>
+</main>
+
+<footer class="site-foot">
+  © 酒井勇輔 — <a href="/" style="color:inherit;">公式サイトに戻る</a>
+</footer>
+
+<script>
+// ================================================================
+// ユーティリティ
+// ================================================================
+function fmt(n) {
+  return Number(n).toLocaleString('ja-JP') + ' 円';
+}
+function fmtShort(n) {
+  return Number(n).toLocaleString('ja-JP');
+}
+function esc(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ================================================================
+// Sankey 図を SVG で描く（3列構造）
+//   左列 : 収入カテゴリ（income sources）
+//   中列 : 収入合計ノード（pool）
+//   右列 : 支出カテゴリ
+//   帯   : 収入ソース→合計・合計→支出費目 の2段ベジェ
+//
+// availW: コンテナ実幅（px）を渡すことでスマホでも正寸で描画し、
+//         viewBox 縮小によるラベル縮小を回避する。
+// ================================================================
+function buildSankey(incomeByCategory, expenseByCategory, availW) {
+  if (!incomeByCategory.length && !expenseByCategory.length) return '';
+
+  const W   = Math.max(availW || 520, 260);
+  const PAD = 10;
+
+  // ノード幅: W に比例しつつ上限 130 / 下限 64
+  const N_W       = Math.min(Math.max(Math.floor(W * 0.23), 64), 130);
+  const gapSpace  = W - 2 * PAD - 3 * N_W;
+  const GAP       = Math.max(10, Math.floor(gapSpace / 2));
+
+  const X_L = PAD;
+  const X_M = X_L + N_W + GAP;
+  const X_R = X_M + N_W + GAP;
+
+  const totalInc = incomeByCategory.reduce((s, c) => s + c.amount, 0);
+  const totalExp = expenseByCategory.reduce((s, c) => s + c.amount, 0);
+  const total    = Math.max(totalInc, totalExp, 1);
+
+  const NODE_GAP  = 6;
+  const MIN_H     = 20;
+  // フォントサイズ: ノード幅から計算し 11-13px に収める
+  const FONT_SZ   = Math.max(11, Math.min(13, Math.floor(N_W * 0.155)));
+
+  // 行数は左右の多い方に合わせる
+  const maxRows = Math.max(incomeByCategory.length, expenseByCategory.length, 1);
+  // usable: 配置の基準値。実際の下端は layoutNodes 後に計算するため H はここでは決めない
+  const usable  = Math.max(maxRows * (MIN_H + NODE_GAP) - NODE_GAP, 120);
+
+  // ノード配置
+  function layoutNodes(cats, x) {
+    const nodes = cats.map(c => ({
+      ...c, x,
+      h: Math.max(MIN_H, Math.round(
+        (c.amount / total) * (usable - (cats.length - 1) * NODE_GAP)
+      )),
+    }));
+    const sumH = nodes.reduce((s, n) => s + n.h, 0);
+    const gaps = (nodes.length - 1) * NODE_GAP;
+    let y = PAD + Math.max(0, (usable - sumH - gaps) / 2);
+    return nodes.map(n => { const nd = {...n, y}; y += n.h + NODE_GAP; return nd; });
+  }
+
+  const incNodes = layoutNodes(incomeByCategory, X_L);
+  const expNodes = layoutNodes(expenseByCategory, X_R);
+
+  // 収入合計（中央）ノードの高さ = 収入ノード群の上端〜下端
+  const poolTop = incNodes.length ? incNodes[0].y : PAD;
+  const poolBot = incNodes.length ? incNodes[incNodes.length - 1].y + incNodes[incNodes.length - 1].h
+                                  : PAD + usable;
+  const poolH   = Math.max(poolBot - poolTop, 1);
+
+  // SVG 高さ: 実際のノード下端から計算（費目が多いと usable を超えるため事前推算は使わない）
+  const bottomInc = incNodes.length ? incNodes[incNodes.length - 1].y + incNodes[incNodes.length - 1].h : PAD;
+  const bottomExp = expNodes.length ? expNodes[expNodes.length - 1].y + expNodes[expNodes.length - 1].h : PAD;
+  const H = Math.max(bottomInc, bottomExp, poolBot) + PAD; // 下余白のみ（凡例は SVG 外）
+
+  const INC_COLORS = ['#2a7a3b', '#3dab55', '#5ac972', '#84d897'];
+  const EXP_COLORS = ['#5B8DEF', '#3b6fd4', '#2a55b0', '#7aa8f5', '#a0c4ff', '#c5d8ff'];
+  const BAND_OP    = 0.28;
+
+  let svg = `<svg class="sankey-svg" width="${W}" height="${H}" `
+          + `xmlns="http://www.w3.org/2000/svg" aria-label="収支フロー図">`;
+
+  // --- 帯: 収入ソース → 収入合計 ---
+  let cL = poolTop;
+  incNodes.forEach((n, i) => {
+    const bh  = Math.max(2, Math.round((n.amount / total) * poolH));
+    const mx  = X_L + N_W + GAP * 0.45;
+    const p   = `M${X_L+N_W},${n.y} C${mx},${n.y} ${mx},${cL} ${X_M},${cL} `
+              + `L${X_M},${cL+bh} C${mx},${cL+bh} ${mx},${n.y+n.h} ${X_L+N_W},${n.y+n.h}Z`;
+    svg += `<path d="${p}" fill="${INC_COLORS[i % INC_COLORS.length]}" opacity="${BAND_OP}"/>`;
+    cL += bh;
+  });
+
+  // --- 帯: 収入合計 → 支出費目 ---
+  let cR = poolTop;
+  expNodes.forEach((n, i) => {
+    const bh  = Math.max(2, Math.round((n.amount / total) * poolH));
+    const mx  = X_M + N_W + GAP * 0.45;
+    const p   = `M${X_M+N_W},${cR} C${mx},${cR} ${mx},${n.y} ${X_R},${n.y} `
+              + `L${X_R},${n.y+n.h} C${mx},${n.y+n.h} ${mx},${cR+bh} ${X_M+N_W},${cR+bh}Z`;
+    svg += `<path d="${p}" fill="${EXP_COLORS[i % EXP_COLORS.length]}" opacity="${BAND_OP}"/>`;
+    cR += bh;
+  });
+
+  // --- ノード描画ヘルパー（rect + 2行テキスト）---
+  function nodeEl(x, y, w, h, color, label, amount) {
+    const cx     = x + w / 2;
+    const cy     = y + h / 2;
+    const maxCh  = Math.max(3, Math.floor(w / (FONT_SZ * 0.62)));
+    const lbl    = label.length > maxCh ? label.slice(0, maxCh - 1) + '…' : label;
+    const amtStr = Number(amount).toLocaleString('ja-JP');
+    let el = `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${color}" rx="2"/>`;
+    if (h >= 34) {
+      // 2行: ラベル + 金額
+      el += `<text x="${cx}" y="${cy - FONT_SZ * 0.6}" dominant-baseline="middle" `
+          + `text-anchor="middle" font-size="${FONT_SZ}" fill="#fff" `
+          + `font-family="sans-serif">${esc(lbl)}</text>`;
+      el += `<text x="${cx}" y="${cy + FONT_SZ * 0.9}" dominant-baseline="middle" `
+          + `text-anchor="middle" font-size="${Math.max(11, FONT_SZ - 2)}" `
+          + `fill="rgba(255,255,255,0.82)" font-family="monospace">${amtStr}</text>`;
+    } else {
+      // 1行: ラベルのみ
+      el += `<text x="${cx}" y="${cy}" dominant-baseline="middle" `
+          + `text-anchor="middle" font-size="${FONT_SZ}" fill="#fff" `
+          + `font-family="sans-serif">${esc(lbl)}</text>`;
+    }
+    return el;
+  }
+
+  // 収入ソードノード（左列）
+  incNodes.forEach((n, i) => {
+    svg += nodeEl(X_L, n.y, N_W, n.h, INC_COLORS[i % INC_COLORS.length], n.label, n.amount);
+  });
+  // 収入合計ノード（中列）
+  svg += nodeEl(X_M, poolTop, N_W, poolH, '#4a6fa5', '収入合計', totalInc);
+  // 支出費目ノード（右列）
+  expNodes.forEach((n, i) => {
+    svg += nodeEl(X_R, n.y, N_W, n.h, EXP_COLORS[i % EXP_COLORS.length], n.label, n.amount);
+  });
+
+  svg += '</svg>';
+
+  // 凡例は SVG 外の HTML として返す（ノードと重ならないよう）
+  const legendHtml = `<div class="sankey-legend">`
+    + `<span>← 収入</span><span>支出 →</span>`
+    + `</div>`;
+
+  return svg + legendHtml;
+}
+
+// ================================================================
+// 取引一覧: テーブル（幅広）＋カード（スマホ）を同時に出力
+// CSS で表示切り替え（600px 境界）
+// ================================================================
+function buildTxnTable(txns, filterCategory) {
+  const filtered = filterCategory === 'all'
+    ? txns
+    : txns.filter(t => t.category === filterCategory);
+
+  if (filtered.length === 0) {
+    return '<div class="no-rows">該当する取引がありません</div>';
+  }
+
+  // --- テーブル行（幅広画面用）---
+  const rows = filtered.map(t => {
+    const dir = t.direction === 'income'
+      ? '<span class="tag tag-income">収入</span>'
+      : '<span class="tag tag-expense">支出</span>';
+    const noncash = t.is_noncash
+      ? ' <span class="tag tag-noncash">現物</span>'
+      : '';
+    const cp    = t.counterparty ? esc(t.counterparty) : '—';
+    const kubun = t.kubun_ja
+      ? `<span style="color:var(--text-dim);font-size:0.8em">${esc(t.kubun_ja)}</span>`
+      : '';
+    return `<tr>
+      <td class="date-col">${esc(t.occurred_on)}</td>
+      <td>${dir}</td>
+      <td>${esc(t.category_ja)}${noncash}<br>${kubun}</td>
+      <td class="col-cp">${cp}</td>
+      <td>${esc(t.purpose) || '—'}</td>
+      <td class="amount-col">${fmtShort(t.amount)}</td>
+    </tr>`;
+  }).join('');
+
+  // --- カード（スマホ用: 1取引 = 1枚）---
+  // 1行目: 日付・金額  2行目: 収支タグ・費目・相手先  3行目: 目的
+  const cards = filtered.map(t => {
+    const dir = t.direction === 'income'
+      ? '<span class="tag tag-income">収入</span>'
+      : '<span class="tag tag-expense">支出</span>';
+    const noncash = t.is_noncash ? ' <span class="tag tag-noncash">現物</span>' : '';
+    const cp      = t.counterparty ? esc(t.counterparty) : '';
+    const purpose = t.purpose ? esc(t.purpose) : '';
+    return `<div class="txn-card">
+      <div class="txn-card-top">
+        <span class="txn-card-date">${esc(t.occurred_on)}</span>
+        <span class="txn-card-amount">${fmtShort(t.amount)} 円</span>
+      </div>
+      <div class="txn-card-meta">
+        ${dir}${noncash}
+        <span>${esc(t.category_ja)}</span>
+        ${cp ? `<span style="color:var(--text-dim)">${cp}</span>` : ''}
+      </div>
+      ${purpose ? `<div class="txn-card-purpose">${purpose}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  return `<table class="txn-table">
+    <thead><tr>
+      <th>日付</th>
+      <th>収支</th>
+      <th>費目</th>
+      <th class="col-cp">相手先</th>
+      <th>目的</th>
+      <th>金額（円）</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <div class="txn-cards">${cards}</div>`;
+}
+
+// ================================================================
+// ページ描画
+// ================================================================
+async function render() {
+  const app = document.getElementById('app');
+
+  let data;
+  try {
+    const res = await fetch('data.json');
+    if (!res.ok) throw new Error(`data.json fetch failed: ${res.status}`);
+    data = await res.json();
+  } catch (e) {
+    app.innerHTML = `<p style="color:#b02020;padding:24px">
+      data.json を読み込めませんでした。<br>
+      <code>python3 export_public.py</code> を実行してから再度開いてください。<br>
+      <small>(${esc(e.message)})</small>
+    </p>`;
+    return;
+  }
+
+  const { election, summary, income_by_source, expense_by_category, transactions } = data;
+
+  // 収入の流れ図: 0円の区分は帯もノードも描かない（MIN_H の箱が出ると金額があるように見えるため）。
+  // 図の短いラベル（short）を使い、375px のノード幅でも切れないようにする。
+  const flowIncome = income_by_source
+    .filter(c => c.amount > 0)
+    .map(c => ({ ...c, label: c.short }));
+  const zeroIncome = income_by_source.filter(c => c.amount === 0);
+  const zeroNote = zeroIncome.length
+    ? `<p class="flow-note">${zeroIncome.map(c => esc(c.label)).join('・')}は 0円のため図には描いていません（下の「03 費目別内訳」に 0円で載せています）。</p>`
+    : '';
+
+  // 収入合計
+  const incTotal  = summary.income_total;
+  const expTotal  = summary.expense_total;
+  const balance   = summary.balance;
+  const balClass  = balance > 0 ? 'positive' : balance < 0 ? 'negative' : 'neutral';
+
+  // フィルター用カテゴリ一覧
+  const allCategories = [...new Set(transactions.map(t => t.category))];
+  const catOptions = ['<option value="all">すべて</option>']
+    .concat(allCategories.map(c => {
+      const label = transactions.find(t => t.category === c)?.category_ja || c;
+      return `<option value="${esc(c)}">${esc(label)}</option>`;
+    }))
+    .join('');
+
+  // 内訳バー最大値
+  const maxInc = Math.max(...income_by_source.map(c => c.amount), 1);
+  const maxExp = Math.max(...expense_by_category.map(c => c.amount), 1);
+
+  const incRows = income_by_source.map(c => `<tr>
+    <td>${esc(c.label)}</td>
+    <td class="amount">${fmtShort(c.amount)}</td>
+    <td class="bar-cell">
+      <div class="bar-bg"><div class="bar-fill income" style="width:${Math.round(c.amount/maxInc*100)}%"></div></div>
+    </td>
+  </tr>`).join('');
+
+  const expRows = expense_by_category.map(c => `<tr>
+    <td>${esc(c.label)}</td>
+    <td class="amount">${fmtShort(c.amount)}</td>
+    <td class="bar-cell">
+      <div class="bar-bg"><div class="bar-fill expense" style="width:${Math.round(c.amount/maxExp*100)}%"></div></div>
+    </td>
+  </tr>`).join('');
+
+  app.innerHTML = `
+    <h1 class="page-title">${esc(election.name)}<br>選挙運動費用の収支</h1>
+    <p class="page-meta">
+      候補者: ${esc(election.candidate_name)}
+      &nbsp;／&nbsp;
+      報告書提出日: ${esc(election.submitted_on) || '—'}${(election.corrected_on || []).length ? '（訂正 ' + election.corrected_on.map(esc).join('、') + '）' : ''}
+      &nbsp;／&nbsp;
+      提出先: ${esc(election.submit_to) || '—'}
+    </p>
+
+    <div class="notice">
+      選挙管理委員会に提出した選挙運動費用収支報告書の記載をもとに表示しています。正式な内容は提出した報告書をご確認ください。
+    </div>
+
+    <!-- 1. 合計 -->
+    <section class="section" id="summary">
+      <h2 class="section-title"><span class="section-idx">01</span>収支合計</h2>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-label">収入合計</div>
+          <div class="summary-amount positive">${fmtShort(incTotal)}<span class="summary-unit">円</span></div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">支出合計</div>
+          <div class="summary-amount">${fmtShort(expTotal)}<span class="summary-unit">円</span></div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">差額（収入－支出）</div>
+          <div class="summary-amount ${balClass}">${fmtShort(balance)}<span class="summary-unit">円</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. フロー図 -->
+    <section class="section" id="flow">
+      <h2 class="section-title"><span class="section-idx">02</span>収支フロー</h2>
+      <div class="sankey-wrap" id="sankey-wrap"></div>
+      ${zeroNote}
+    </section>
+
+    <!-- 3. 費目別内訳 -->
+    <section class="section" id="breakdown">
+      <h2 class="section-title"><span class="section-idx">03</span>費目別内訳</h2>
+
+      <p style="font-size:0.84rem;color:var(--text-dim);margin-bottom:14px">収入</p>
+      <table class="breakdown-table" style="margin-bottom:24px">
+        <thead><tr><th>費目</th><th>金額（円）</th><th class="bar-cell">割合</th></tr></thead>
+        <tbody>${incRows}</tbody>
+      </table>
+
+      <p style="font-size:0.84rem;color:var(--text-dim);margin-bottom:14px">支出</p>
+      <table class="breakdown-table">
+        <thead><tr><th>費目</th><th>金額（円）</th><th class="bar-cell">割合</th></tr></thead>
+        <tbody>${expRows}</tbody>
+      </table>
+    </section>
+
+    <!-- 4. 取引一覧 -->
+    <section class="section" id="transactions">
+      <h2 class="section-title"><span class="section-idx">04</span>取引一覧</h2>
+      <div class="filter-row">
+        <span class="filter-label">費目で絞り込み</span>
+        <select class="filter-select" id="cat-filter">${catOptions}</select>
+      </div>
+      <div id="txn-table-wrap"></div>
+    </section>
+  `;
+
+  // Sankey 描画（コンテナの実幅を取得してから描画する）
+  function drawSankey() {
+    const wrap = document.getElementById('sankey-wrap');
+    if (!wrap) return;
+    const w = wrap.getBoundingClientRect().width || wrap.clientWidth || 520;
+    wrap.innerHTML = buildSankey(flowIncome, expense_by_category, Math.floor(w));
+  }
+  drawSankey();
+
+  // ウィンドウリサイズ時に再描画（120ms デバウンス）
+  let _sankeyTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(_sankeyTimer);
+    _sankeyTimer = setTimeout(drawSankey, 120);
+  });
+
+  // 取引一覧（初期: 全件）
+  document.getElementById('txn-table-wrap').innerHTML =
+    buildTxnTable(transactions, 'all');
+
+  // 絞り込みイベント
+  document.getElementById('cat-filter').addEventListener('change', function() {
+    document.getElementById('txn-table-wrap').innerHTML =
+      buildTxnTable(transactions, this.value);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
