@@ -695,7 +695,7 @@
       "kubun": null,
       "kubun_ja": null,
       "purpose": null,
-      "counterparty": null,
+      "counterparty": "自己資金",
       "is_noncash": false,
       "noncash_desc": null,
       "income_source": "sonota_jiko"
