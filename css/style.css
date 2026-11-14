@@ -156,7 +156,7 @@ button:focus-visible {
 .brand-ja { font-family: var(--font-serif); font-weight: 700; font-size: 1.05rem; color: var(--paper); text-shadow: 0 1px 2px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,0.6); }
 .brand-en { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.35em; color: var(--brass-bright); text-shadow: 0 1px 2px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,0.6); }
 
-.site-nav { display: flex; gap: 28px; }
+.site-nav { display: flex; gap: 22px; } /* 9項目になったので 28px → 22px（1280px幅で折り返さないように） */
 .site-nav a {
   font-size: 0.86rem;
   font-weight: 500;
@@ -904,6 +904,79 @@ section[id] { scroll-margin-top: var(--head-h); }
 }
 
 /* ---------------------------------------------------------------------
+   03 政策の方向性: 守り(2箱)／攻め(1箱)の3列と、全幅の土台
+--------------------------------------------------------------------- */
+.dir-map {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 14px;
+  margin-bottom: 48px;
+}
+.dir-side-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 0 2px 8px;
+  margin-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+}
+.dir-attack .dir-side-head { border-bottom-color: var(--brass); }
+.dir-side-name {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+}
+.dir-side-note { font-size: 0.8rem; color: var(--text-dim); }
+.dir-boxes { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 14px; }
+.dir-box {
+  background: var(--paper-tint);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--ink);
+  padding: 24px 20px 22px;
+}
+.dir-attack .dir-box { border-top-color: var(--brass); }
+.dir-box h3 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.dir-what { font-size: 0.84rem; color: var(--text-dim); margin: 4px 0 14px; }
+.dir-items {
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.7;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.dir-base {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 18px 20px;
+}
+.dir-base-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--brass);
+}
+.dir-base-name { font-family: var(--font-serif); font-size: 1.25rem; letter-spacing: 0.14em; }
+.dir-base-note { font-size: 0.82rem; color: rgba(245,246,250,0.78); }
+.dir-text { max-width: 42em; }
+.dir-text p { font-size: 0.94rem; margin-bottom: 1.1em; }
+.dir-text .dir-note { color: var(--text-dim); font-size: 0.86rem; margin-top: 1.8em; margin-bottom: 0; }
+
+/* ---------------------------------------------------------------------
    レスポンシブ
 --------------------------------------------------------------------- */
 @media (max-width: 900px) {
@@ -932,7 +1005,9 @@ section[id] { scroll-margin-top: var(--head-h); }
     transition: max-height 0.35s ease, visibility 0s linear 0.35s;
   }
   .site-nav.open {
-    max-height: 360px;
+    /* 360px 固定だと項目が増えたとき下の項目が切れる（1項目 約57px × 9 = 約513px）。画面の高さまで広げ、足りなければ中でスクロール */
+    max-height: calc(100vh - var(--head-h));
+    overflow-y: auto;
     visibility: visible;
     transition: max-height 0.35s ease, visibility 0s;
   }
@@ -960,6 +1035,10 @@ section[id] { scroll-margin-top: var(--head-h); }
   .hero-meta-sep { display: none; }
   .hero-meta-job { display: block; margin-top: 6px; }
   .hero-scrollcue { left: 20px; }
+
+  .dir-map { grid-template-columns: 1fr; gap: 28px; margin-bottom: 36px; }
+  .dir-boxes { grid-auto-flow: row; }
+  .dir-base { flex-direction: column; align-items: center; gap: 2px; }
 
   .belief-item { grid-template-columns: 56px minmax(0, 1fr); gap: 18px; padding: 28px 0; }
   .belief-no { font-size: 2.1rem; }
