@@ -62,13 +62,15 @@
         <ul class="site-nav" id="navMenu">
           <li><a href="#about"><span class="nav-index">01</span>プロフィール</a></li>
           <li><a href="#beliefs"><span class="nav-index">02</span>ポリシー</a></li>
-          <li><a href="#vision"><span class="nav-index">03</span>政策</a></li>
-          <li><a href="#career"><span class="nav-index">04</span>経歴</a></li>
-          <li><a href="#report"><span class="nav-index">05</span>活動報告</a></li>
-          <li><a href="#seiji-shikin"><span class="nav-index">06</span>政治資金</a></li>
-          <li><a href="#yosan"><span class="nav-index">07</span>予算可視化</a></li>
-          <li><a href="#meyasubako"><span class="nav-index">08</span>AIインタビュー</a></li>
-          <li><a href="#contact"><span class="nav-index">09</span>お問い合わせ</a></li>
+          <!-- 政策・ビジョンは現行サイト同様、公開まで非表示
+          <li><a href="#vision">政策・ビジョン</a></li>
+          -->
+          <li><a href="#career"><span class="nav-index">03</span>経歴</a></li>
+          <li><a href="#report"><span class="nav-index">04</span>活動報告</a></li>
+          <li><a href="#seiji-shikin"><span class="nav-index">05</span>政治資金</a></li>
+          <li><a href="#yosan"><span class="nav-index">06</span>予算可視化</a></li>
+          <li><a href="#meyasubako"><span class="nav-index">07</span>AIインタビュー</a></li>
+          <li><a href="#contact"><span class="nav-index">08</span>お問い合わせ</a></li>
         </ul>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="メニュー" aria-controls="navMenu" aria-expanded="false">
@@ -200,61 +202,22 @@
       </ol>
     </section>
 
-    <!-- 03 政策の方向性: 「守り／攻め」と土台の図＋短い説明。個別の政策はまだ載せない（創作して埋めない）。
-         図は画像にせず HTML で組む（検索やAIが文字として読めるように） -->
+    <!-- 政策・ビジョンセクション: 現行サイト同様、内容公開まで非表示（XXXXのまま。創作して埋めない） -->
+    <!--
     <section id="vision" class="section">
       <header class="sec-head">
-        <span class="sec-index">03</span>
-        <h2 class="sec-title">政策の方向性</h2>
-        <span class="sec-en" aria-hidden="true">DIRECTION</span>
+        <span class="sec-index">--</span>
+        <h2 class="sec-title">政策・ビジョン</h2>
+        <span class="sec-en">VISION</span>
       </header>
-      <p class="sec-sub">国の仕事を「守り」と「攻め」に分けて考えています。</p>
-
-      <div class="dir-map">
-        <div class="dir-side dir-guard">
-          <p class="dir-side-head"><span class="dir-side-name">守り</span><span class="dir-side-note">マイナスを防ぐ</span></p>
-          <div class="dir-boxes">
-            <div class="dir-box">
-              <h3>備える</h3>
-              <p class="dir-what">みんなを同時に襲う危険に</p>
-              <p class="dir-items">防災・国防・治安・外交</p>
-            </div>
-            <div class="dir-box">
-              <h3>支える</h3>
-              <p class="dir-what">一人ひとりに起きる危険に</p>
-              <p class="dir-items">医療・介護・年金・貧困・子育て支援</p>
-            </div>
-          </div>
-        </div>
-        <div class="dir-side dir-attack">
-          <p class="dir-side-head"><span class="dir-side-name">攻め</span><span class="dir-side-note">プラスを増やす</span></p>
-          <div class="dir-boxes">
-            <div class="dir-box">
-              <h3>伸ばす</h3>
-              <p class="dir-what">豊かさと力を増やす</p>
-              <p class="dir-items">経済・雇用・教育・科学</p>
-            </div>
-          </div>
-        </div>
-        <div class="dir-base">
-          <span class="dir-base-label">土台</span>
-          <strong class="dir-base-name">テクノロジー</strong>
-          <span class="dir-base-note">3つすべてに掛かる手段</span>
-        </div>
-      </div>
-
-      <div class="dir-text">
-        <p>守りは、悪いことを防ぐ仕事です。地震や戦争のように、みんなを同時に襲う危険には「備える」。病気や老い、失業のように、一人ひとりに別々に起きる危険には「支える」。</p>
-        <p>攻めは、良いことを増やす仕事です。経済を大きくし、人を育てて「伸ばす」。伸ばして得た分で、備えと支えをまかないます。</p>
-        <p>この3つの土台にテクノロジーを置きます。ITやAIは分野のひとつではなく、3つすべてを良くするための手段です。</p>
-        <p class="dir-note">個別の政策は、この枠組みに沿って順に載せていきます。</p>
-      </div>
+      <p>XXXX</p>
     </section>
+    -->
 
-    <!-- 04 経歴: 座標軸のような1本の細線に、モノスペースの年号を打点するタイムライン -->
-    <section id="career" class="section section-tinted">
+    <!-- 03 経歴: 座標軸のような1本の細線に、モノスペースの年号を打点するタイムライン -->
+    <section id="career" class="section">
       <header class="sec-head">
-        <span class="sec-index">04</span>
+        <span class="sec-index">03</span>
         <h2 class="sec-title">経歴</h2>
         <span class="sec-en" aria-hidden="true">CAREER</span>
       </header>
@@ -310,10 +273,10 @@
       </div>
     </section>
 
-    <!-- 05 活動報告: note RSS（allorigins経由）。取得失敗時は必ずnoteリンクのfallbackを表示 -->
-    <section id="report" class="section">
+    <!-- 04 活動報告: note RSS（allorigins経由）。取得失敗時は必ずnoteリンクのfallbackを表示 -->
+    <section id="report" class="section section-tinted">
       <header class="sec-head">
-        <span class="sec-index">05</span>
+        <span class="sec-index">04</span>
         <h2 class="sec-title">活動報告</h2>
         <span class="sec-en" aria-hidden="true">REPORT</span>
       </header>
@@ -333,10 +296,10 @@
       </div>
     </section>
 
-    <!-- 06 政治資金 -->
-    <section id="seiji-shikin" class="section section-tinted">
+    <!-- 05 政治資金 -->
+    <section id="seiji-shikin" class="section">
       <header class="sec-head">
-        <span class="sec-index">06</span>
+        <span class="sec-index">05</span>
         <h2 class="sec-title">政治資金</h2>
         <span class="sec-en" aria-hidden="true">POLITICAL FUNDS</span>
       </header>
@@ -348,10 +311,10 @@
       </div>
     </section>
 
-    <!-- 07 予算可視化 -->
-    <section id="yosan" class="section">
+    <!-- 06 予算可視化 -->
+    <section id="yosan" class="section section-tinted">
       <header class="sec-head">
-        <span class="sec-index">07</span>
+        <span class="sec-index">06</span>
         <h2 class="sec-title">予算可視化</h2>
         <span class="sec-en" aria-hidden="true">BUDGET</span>
       </header>
@@ -366,10 +329,10 @@
       </div>
     </section>
 
-    <!-- 08 AIインタビュー -->
-    <section id="meyasubako" class="section section-tinted">
+    <!-- 07 AIインタビュー -->
+    <section id="meyasubako" class="section">
       <header class="sec-head">
-        <span class="sec-index">08</span>
+        <span class="sec-index">07</span>
         <h2 class="sec-title">AIインタビュー</h2>
         <span class="sec-en" aria-hidden="true">AI INTERVIEW</span>
       </header>
@@ -405,10 +368,10 @@
       </div>
     </section>
 
-    <!-- 09 お問い合わせ -->
-    <section id="contact" class="section">
+    <!-- 08 お問い合わせ -->
+    <section id="contact" class="section section-tinted">
       <header class="sec-head">
-        <span class="sec-index">09</span>
+        <span class="sec-index">08</span>
         <h2 class="sec-title">お問い合わせ</h2>
         <span class="sec-en" aria-hidden="true">CONTACT</span>
       </header>
