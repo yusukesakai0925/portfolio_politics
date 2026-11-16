@@ -37,7 +37,7 @@
   <!-- AI向けのサイト要約（llms.txt）。rel="alternate" で機械可読な別形式として案内する -->
   <link rel="alternate" type="text/plain" title="llms.txt" href="llms.txt">
 
-  <link rel="stylesheet" href="css/style.css?v=20261013b">
+  <link rel="stylesheet" href="css/style.css?v=20261116a">
   <!-- Font Awesome: Xアイコン fa-x-twitter は 6.4.2 で追加されたため 6.0.0 では表示されない。6.7.2 に更新 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
@@ -304,9 +304,12 @@
         <span class="sec-en" aria-hidden="true">POLITICAL FUNDS</span>
       </header>
       <p class="sec-sub">2026年衆院選（京都2区）の選挙運動費用収支報告書の記載をもとに、収入・支出の流れと取引の一覧を公開しています。</p>
+      <figure class="funds-flow">
+        <div class="sankey-wrap" id="top-sankey"></div>
+      </figure>
       <div class="note-link-wrap">
         <a href="/seiji-shikin/" class="btn btn-line">
-          <i class="fas fa-yen-sign" aria-hidden="true"></i> 政治資金
+          <i class="fas fa-yen-sign" aria-hidden="true"></i> 詳細はこちら
         </a>
       </div>
     </section>
@@ -485,5 +488,30 @@
   </footer>
 
   <script src="js/script.js"></script>
+  <script src="seiji-shikin/sankey.js"></script>
+  <script>
+  // 「05 政治資金」に収支フロー図を埋め込む（数字は /seiji-shikin/data.json。詳細ページと同じ描画コード）
+  (async function () {
+    const wrap = document.getElementById('top-sankey');
+    if (!wrap) return;
+    let data;
+    try {
+      const res = await fetch('seiji-shikin/data.json');
+      if (!res.ok) throw new Error(res.status);
+      data = await res.json();
+    } catch (e) {
+      wrap.closest('.funds-flow').remove();
+      return;
+    }
+    const inc = data.income_by_source.filter(c => c.amount > 0).map(c => ({ ...c, label: c.short }));
+    const draw = () => {
+      const w = wrap.clientWidth || 520;
+      wrap.innerHTML = buildSankey(inc, data.expense_by_category, Math.floor(w));
+    };
+    draw();
+    let t = null;
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(draw, 120); });
+  })();
+  </script>
 </body>
 </html>

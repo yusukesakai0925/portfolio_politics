@@ -976,3 +976,9 @@ section[id] { scroll-margin-top: var(--head-h); }
   .meyasu-step:not(:last-child)::after { display: none; }
   .meyasu-step { padding: 20px 16px; }
 }
+
+/* 05 政治資金: トップに埋め込む収支フロー図（描画は seiji-shikin/sankey.js） */
+.funds-flow { max-width: 860px; margin: 0 auto 20px; }
+.funds-flow .sankey-wrap { width: 100%; overflow-x: auto; background: var(--paper-tint); border: 1px solid var(--line); border-radius: 2px; padding: 8px 0 4px; }
+.funds-flow .sankey-svg { display: block; margin: 0 auto; }
+.funds-flow .sankey-legend { display: flex; justify-content: space-between; padding: 4px 10px 6px; font-size: 11px; color: #8898aa; font-family: sans-serif; user-select: none; }
