@@ -132,7 +132,7 @@ function buildSankey(incomeByCategory, expenseByCategory, availW) {
     const cy     = y + h / 2;
     const maxCh  = Math.max(3, Math.floor(w / (FONT_SZ * 0.62)));
     const lbl    = label.length > maxCh ? label.slice(0, maxCh - 1) + '…' : label;
-    const amtStr = Number(amount).toLocaleString('ja-JP');
+    const amtStr = Number(amount).toLocaleString('ja-JP') + '円';
     let el = `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${color}" rx="2"/>`;
     if (h >= 34) {
       // 2行: ラベル + 金額
